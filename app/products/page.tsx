@@ -1,6 +1,5 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import ModernLayout from "../components/ModernLayout";
 import ModernProductsPage from "../components/ModernProductsPage";
 
 type Product = {
@@ -26,10 +25,5 @@ async function getProducts(): Promise<Product[]> {
 
 export default async function ProductsPage() {
   const products = await getProducts();
-
-  return (
-    <ModernLayout>
-      <ModernProductsPage products={products} />
-    </ModernLayout>
-  );
+  return <ModernProductsPage products={products} />;
 }

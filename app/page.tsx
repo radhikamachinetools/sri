@@ -1,7 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-import ModernLayout from "./components/ModernLayout";
 import SalesHomepage from "./components/SalesHomepage";
 import ProductShowcase from "./components/ProductShowcase";
 import TestimonialsSection from "./components/TestimonialsSection";
@@ -52,44 +51,34 @@ export default async function HomePage() {
   ]);
 
   return (
-    <ModernLayout>
-      {/* New Sales-Focused Homepage */}
+    <div className="bg-white">
       <SalesHomepage featuredProducts={featuredProducts} settings={settings} />
       
-      {/* Product Showcase */}
       <ProductShowcase 
         products={featuredProducts} 
         title="Featured Machinery"
         subtitle="Explore our premium stone processing equipment designed for maximum efficiency and ROI"
       />
       
-      {/* Media Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <div className="inline-block bg-blue-100 text-blue-800 px-6 py-3 rounded-full text-lg font-semibold mb-6">
-              🏭 Behind the Scenes
-            </div>
-            <h2 className="text-5xl lg:text-6xl font-black mb-6 text-gray-900">
-              <span className="bg-gradient-to-r from-slate-900 to-blue-900 bg-clip-text text-transparent">
-                Factory in Action
-              </span>
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <span className="inline-block bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+              Factory Tour
+            </span>
+            <h2 className="text-3xl font-bold mb-4 text-gray-900">
+              Manufacturing Excellence
             </h2>
-            <p className="text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Take a look inside our state-of-the-art manufacturing facility where precision meets innovation
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              See our precision manufacturing process in action
             </p>
           </div>
-          <div className="relative">
-            <MediaSlider />
-          </div>
+          <MediaSlider />
         </div>
       </section>
       
-      {/* Testimonials */}
       <TestimonialsSection />
-      
-      {/* Contact CTA */}
       <ContactCTASection settings={settings} />
-    </ModernLayout>
+    </div>
   );
 }
