@@ -58,28 +58,22 @@ const stats = [
 
 export default function TestimonialsSection() {
   return (
-    <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-6">
+    <section className="py-16 bg-white">
+      <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-12"
         >
-          <Badge className="mb-6 bg-blue-500/20 text-blue-200 border-blue-400/30 text-lg px-8 py-3 backdrop-blur-sm">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             ⭐ Client Success Stories
-          </Badge>
-          <h2 className="text-5xl md:text-6xl font-black mb-8">
-            What Our <span className="text-blue-400">Clients Say</span>
           </h2>
-          <p className="text-2xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+            What Our <span className="text-primary">Clients Say</span>
+          </h3>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Don't just take our word for it - hear from industry leaders who trust our machinery
           </p>
         </motion.div>
@@ -100,19 +94,17 @@ export default function TestimonialsSection() {
               transition={{ delay: index * 0.1 }}
               className="text-center"
             >
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300">
-                <CardContent className="p-8">
-                  <div className="text-blue-400 mb-4 flex justify-center">
-                    {stat.icon}
-                  </div>
-                  <div className="text-4xl font-black text-white mb-2">
-                    {stat.number}
-                  </div>
-                  <div className="text-slate-300 font-medium">
-                    {stat.label}
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200">
+                <div className="text-primary mb-4 flex justify-center">
+                  {stat.icon}
+                </div>
+                <div className="text-2xl font-bold text-gray-900 mb-2">
+                  {stat.number}
+                </div>
+                <div className="text-gray-600 font-medium text-sm">
+                  {stat.label}
+                </div>
+              </div>
             </motion.div>
           ))}
         </motion.div>
@@ -127,30 +119,29 @@ export default function TestimonialsSection() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.2 }}
             >
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-500 h-full">
-                <CardContent className="p-8">
-                  {/* Quote Icon */}
-                  <div className="mb-6">
-                    <Quote className="h-12 w-12 text-blue-400 opacity-50" />
-                  </div>
+              <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200 h-full">
+                {/* Quote Icon */}
+                <div className="mb-4">
+                  <Quote className="h-6 w-6 text-primary opacity-50" />
+                </div>
 
-                  {/* Rating */}
-                  <div className="flex items-center mb-6">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
-                    ))}
-                  </div>
+                {/* Rating */}
+                <div className="flex items-center mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
+                  ))}
+                </div>
 
-                  {/* Testimonial Text */}
-                  <p className="text-slate-200 text-lg leading-relaxed mb-8 italic">
-                    "{testimonial.text}"
-                  </p>
+                {/* Testimonial Text */}
+                <p className="text-gray-700 leading-relaxed mb-6 italic">
+                  "{testimonial.text}"
+                </p>
 
                   {/* Client Info */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center mr-4">
-                        <span className="text-white font-bold text-xl">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary-dark rounded-full flex items-center justify-center mr-4">
+                        <span className="text-white font-bold">
                           {testimonial.name.charAt(0)}
                         </span>
                       </div>
@@ -158,22 +149,21 @@ export default function TestimonialsSection() {
                         <h4 className="text-white font-bold text-lg">
                           {testimonial.name}
                         </h4>
-                        <div className="flex items-center text-slate-300 text-sm mb-1">
+                        <div className="flex items-center text-gray-600 text-sm mb-1">
                           <Building className="h-4 w-4 mr-1" />
                           {testimonial.company}
                         </div>
-                        <div className="flex items-center text-slate-400 text-sm">
+                        <div className="flex items-center text-gray-500 text-sm">
                           <MapPin className="h-4 w-4 mr-1" />
                           {testimonial.location}
                         </div>
                       </div>
                     </div>
-                    <Badge className="bg-blue-500/20 text-blue-200 border-blue-400/30">
+                    <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">
                       {testimonial.industry}
-                    </Badge>
+                    </span>
                   </div>
-                </CardContent>
-              </Card>
+              </div>
             </motion.div>
           ))}
         </div>

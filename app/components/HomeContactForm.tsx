@@ -77,9 +77,9 @@ export default function HomeContactForm() {
               name="name"
               placeholder="Your Name"
               required
-              className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 focus:ring-2 focus:ring-brand-accent focus:border-transparent text-white placeholder-green-100 transition-all duration-300 peer"
+              className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 focus:ring-2 focus:ring-primary focus:border-transparent text-white placeholder-orange-100 transition-all duration-300 peer"
             />
-            <label className="absolute -top-2 left-3 bg-brand-green px-2 text-xs text-white opacity-0 peer-focus:opacity-100 peer-valid:opacity-100 transition-opacity">Name</label>
+            <label className="absolute -top-2 left-3 bg-primary px-2 text-xs text-white opacity-0 peer-focus:opacity-100 peer-valid:opacity-100 transition-opacity">Name</label>
           </div>
           <div className="relative">
             <input
@@ -87,9 +87,9 @@ export default function HomeContactForm() {
               name="email"
               placeholder="Your Email"
               required
-              className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 focus:ring-2 focus:ring-brand-accent focus:border-transparent text-white placeholder-green-100 transition-all duration-300 peer"
+              className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 focus:ring-2 focus:ring-primary focus:border-transparent text-white placeholder-orange-100 transition-all duration-300 peer"
             />
-            <label className="absolute -top-2 left-3 bg-brand-green px-2 text-xs text-white opacity-0 peer-focus:opacity-100 peer-valid:opacity-100 transition-opacity">Email</label>
+            <label className="absolute -top-2 left-3 bg-primary px-2 text-xs text-white opacity-0 peer-focus:opacity-100 peer-valid:opacity-100 transition-opacity">Email</label>
           </div>
         </div>
         
@@ -98,9 +98,9 @@ export default function HomeContactForm() {
             type="tel"
             name="phone"
             placeholder="Phone Number"
-            className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 focus:ring-2 focus:ring-brand-accent focus:border-transparent text-white placeholder-green-100 transition-all duration-300 peer"
+            className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 focus:ring-2 focus:ring-primary focus:border-transparent text-white placeholder-orange-100 transition-all duration-300 peer"
           />
-          <label className="absolute -top-2 left-3 bg-brand-green px-2 text-xs text-white opacity-0 peer-focus:opacity-100 peer-valid:opacity-100 transition-opacity">Phone</label>
+          <label className="absolute -top-2 left-3 bg-primary px-2 text-xs text-white opacity-0 peer-focus:opacity-100 peer-valid:opacity-100 transition-opacity">Phone</label>
         </div>
         
         <div className="relative">
@@ -108,16 +108,16 @@ export default function HomeContactForm() {
             name="message"
             placeholder="Tell us about your requirements..."
             rows={4}
-            className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 focus:ring-2 focus:ring-brand-accent focus:border-transparent text-white placeholder-green-100 transition-all duration-300 resize-none peer"
+            className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 focus:ring-2 focus:ring-primary focus:border-transparent text-white placeholder-orange-100 transition-all duration-300 resize-none peer"
           ></textarea>
-          <label className="absolute -top-2 left-3 bg-brand-green px-2 text-xs text-white opacity-0 peer-focus:opacity-100 peer-valid:opacity-100 transition-opacity">Message</label>
+          <label className="absolute -top-2 left-3 bg-primary px-2 text-xs text-white opacity-0 peer-focus:opacity-100 peer-valid:opacity-100 transition-opacity">Message</label>
         </div>
         
         <div className="text-center">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="bg-brand-accent text-brand-green-dark font-bold py-4 px-12 rounded-full hover:bg-white transition-all duration-300 transform hover:scale-105 shadow-2xl text-lg disabled:opacity-50"
+            className="bg-accent text-primary-dark font-bold py-4 px-12 rounded-full hover:bg-white transition-all duration-300 transform hover:scale-105 shadow-2xl text-lg disabled:opacity-50"
           >
             {isSubmitting ? 'Sending...' : 'Send Message'}
           </button>

@@ -75,53 +75,39 @@ export default function ModernAboutPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-r from-primary to-primary-dark text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl"></div>
-        </div>
         
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <Badge className="mb-6 bg-blue-500/20 text-blue-200 border-blue-400/30 text-lg px-8 py-3 backdrop-blur-sm">
-                🏭 About Shree Radhey Industries
-              </Badge>
-              
-              <h1 className="text-5xl md:text-6xl font-black mb-8 leading-tight">
-                <span className="bg-gradient-to-r from-white via-blue-200 to-indigo-200 bg-clip-text text-transparent">
-                  Crafting Excellence
-                </span>
+              <h1 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
+                Crafting Excellence
                 <br />
-                <span className="text-blue-400">Since 1998</span>
+                <span className="text-orange-200">Since 1998</span>
               </h1>
               
-              <p className="text-xl md:text-2xl mb-8 text-slate-300 leading-relaxed">
+              <p className="text-lg md:text-xl mb-8 text-orange-100 leading-relaxed">
                 For over 25 years, we've been at the forefront of stone processing technology, 
                 delivering innovative machinery solutions that transform businesses across India.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg px-8 py-4">
-                  <Phone className="mr-2 h-5 w-5" />
+                <button className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                  <Phone className="inline mr-2 h-5 w-5" />
                   Contact Us
-                </Button>
-                <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 text-lg px-8 py-4 backdrop-blur-sm">
-                  <ArrowRight className="mr-2 h-5 w-5" />
-                  Our Story
-                </Button>
+                </button>
               </div>
             </motion.div>
             
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
               className="relative"
             >
               <div className="relative">
@@ -146,25 +132,25 @@ export default function ModernAboutPage() {
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.1, duration: 0.6, ease: "easeOut" }}
                 className="text-center"
               >
-                <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <CardContent className="p-8">
-                    <div className="text-blue-600 mb-4 flex justify-center">
+                <div className="bg-gradient-to-br from-white to-orange-50 p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2 border border-orange-100">
+                  <div className="p-2">
+                    <div className="text-primary mb-4 flex justify-center">
                       {stat.icon}
                     </div>
-                    <div className="text-4xl font-black text-slate-900 mb-2">
+                    <div className="text-2xl font-bold text-gray-900 mb-1">
                       {stat.number}
                     </div>
-                    <div className="text-slate-600 font-medium">
+                    <div className="text-gray-600 font-medium text-sm">
                       {stat.label}
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -172,104 +158,74 @@ export default function ModernAboutPage() {
       </section>
 
       {/* Our Story Section */}
-      <section className="py-24 bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl md:text-6xl font-black mb-8">
-              <span className="bg-gradient-to-r from-slate-900 to-blue-900 bg-clip-text text-transparent">
-                Our Journey
-              </span>
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Our Journey
             </h2>
-            <p className="text-2xl text-slate-600 max-w-4xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               From a small workshop to India's leading stone machinery manufacturer
             </p>
-          </motion.div>
+          </div>
 
-          <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 to-indigo-500 rounded-full"></div>
-            
-            <div className="space-y-12">
-              {milestones.map((milestone, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2 }}
-                  className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
-                >
-                  <div className="w-1/2 px-8">
-                    <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                      <CardContent className="p-8">
-                        <div className="text-3xl font-bold text-blue-600 mb-2">
-                          {milestone.year}
-                        </div>
-                        <h3 className="text-xl font-bold text-slate-900 mb-3">
-                          {milestone.title}
-                        </h3>
-                        <p className="text-slate-600 leading-relaxed">
-                          {milestone.description}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </div>
-                  
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full border-4 border-white shadow-lg z-10"></div>
-                  
-                  <div className="w-1/2"></div>
-                </motion.div>
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {milestones.map((milestone, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
+                className="bg-gradient-to-br from-white to-orange-50 p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-orange-100"
+              >
+                <div className="text-2xl font-bold text-primary mb-2">
+                  {milestone.year}
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  {milestone.title}
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  {milestone.description}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Values Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl md:text-6xl font-black mb-8">
-              <span className="bg-gradient-to-r from-slate-900 to-blue-900 bg-clip-text text-transparent">
-                Our Values
-              </span>
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Our Values
             </h2>
-            <p className="text-2xl text-slate-600 max-w-4xl mx-auto">
+            <p className="text-lg text-gray-600">
               The principles that guide everything we do
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
               >
-                <Card className="h-full border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                  <CardContent className="p-8 text-center">
-                    <div className="mb-6 flex justify-center">
-                      {value.icon}
-                    </div>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-4">
-                      {value.title}
-                    </h3>
-                    <p className="text-slate-600 leading-relaxed">
-                      {value.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                <div className="bg-gradient-to-br from-white to-orange-50 p-6 rounded-xl text-center h-full shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2 border border-orange-100">
+                  <div className="mb-4 flex justify-center">
+                    {value.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    {value.title}
+                  </h3>
+                  <p className="text-gray-600">
+                    {value.description}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -277,18 +233,19 @@ export default function ModernAboutPage() {
       </section>
 
       {/* Team Section */}
-      <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+      <section className="py-16 bg-gradient-to-br from-orange-50 to-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-center mb-12"
           >
-            <h2 className="text-5xl md:text-6xl font-black mb-8">
-              Meet Our <span className="text-blue-400">Leadership</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Meet Our <span className="text-primary">Leadership</span>
             </h2>
-            <p className="text-2xl text-slate-300 max-w-4xl mx-auto">
+            <p className="text-lg text-gray-600">
               The experienced team driving innovation in stone processing technology
             </p>
           </motion.div>
@@ -297,29 +254,29 @@ export default function ModernAboutPage() {
             {team.map((member, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.2 }}
+                transition={{ delay: index * 0.2, duration: 0.6, ease: "easeOut" }}
               >
-                <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300">
-                  <CardContent className="p-8 text-center">
-                    <div className="w-32 h-32 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mx-auto mb-6 flex items-center justify-center">
-                      <span className="text-white font-bold text-4xl">
+                <div className="bg-gradient-to-br from-white to-orange-50 p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-3 hover:rotate-1 border border-orange-100 group">
+                  <div className="text-center">
+                    <div className="w-24 h-24 bg-gradient-to-r from-primary to-primary-dark rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-white font-bold text-2xl">
                         {member.name.charAt(0)}
                       </span>
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-2">
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">
                       {member.name}
                     </h3>
-                    <div className="text-blue-400 font-semibold mb-4">
+                    <div className="text-primary font-semibold mb-3 text-sm">
                       {member.position}
                     </div>
-                    <p className="text-slate-300 leading-relaxed">
+                    <p className="text-gray-600 text-sm leading-relaxed">
                       {member.description}
                     </p>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -327,44 +284,61 @@ export default function ModernAboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <section className="py-16 bg-gradient-to-r from-primary to-primary-dark text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="relative max-w-4xl mx-auto px-6 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <h2 className="text-5xl font-black mb-8">
-              Ready to Partner With Us?
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready to <span className="text-orange-200">Partner</span> With Us?
             </h2>
-            <p className="text-2xl mb-12 text-blue-100">
+            <p className="text-lg mb-8 text-orange-100">
               Join hundreds of satisfied customers who trust our expertise and quality
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
-              <Button className="bg-white text-blue-600 hover:bg-slate-100 text-xl px-12 py-6 font-bold">
-                <Phone className="mr-3 h-6 w-6" />
-                Get in Touch
-              </Button>
-              <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 text-xl px-12 py-6 backdrop-blur-sm">
-                <Building className="mr-3 h-6 w-6" />
-                Visit Our Factory
-              </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+              <motion.div
+                whileHover={{ scale: 1.05, rotate: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <button className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg">
+                  <Phone className="inline mr-2 h-5 w-5" />
+                  Get in Touch
+                </button>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05, rotate: -1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <button className="border border-white/30 text-white px-8 py-3 rounded-lg hover:bg-white/10 transition-all duration-300">
+                  <Building className="inline mr-2 h-5 w-5" />
+                  Visit Our Factory
+                </button>
+              </motion.div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-blue-100">
-              <div className="flex items-center justify-center">
-                <CheckCircle className="h-6 w-6 mr-3" />
-                <span className="text-lg">25+ Years Experience</span>
-              </div>
-              <div className="flex items-center justify-center">
-                <CheckCircle className="h-6 w-6 mr-3" />
-                <span className="text-lg">ISO Certified Quality</span>
-              </div>
-              <div className="flex items-center justify-center">
-                <CheckCircle className="h-6 w-6 mr-3" />
-                <span className="text-lg">24/7 Support</span>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-orange-100">
+              {[
+                { text: "25+ Years Experience" },
+                { text: "ISO Certified Quality" },
+                { text: "24/7 Support" }
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.2, duration: 0.5 }}
+                  className="flex items-center justify-center"
+                >
+                  <CheckCircle className="h-5 w-5 mr-2 text-orange-200" />
+                  <span className="text-sm">{item.text}</span>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>

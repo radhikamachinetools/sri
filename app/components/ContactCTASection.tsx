@@ -46,29 +46,27 @@ export default function ContactCTASection({ settings }: ContactCTASectionProps) 
   }
 
   return (
-    <section className="py-24 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 relative overflow-hidden">
-      {/* Background Elements */}
+    <section className="py-16 bg-gradient-to-r from-primary to-primary-dark relative overflow-hidden">
       <div className="absolute inset-0 bg-black/10"></div>
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-white/5 rounded-full blur-3xl"></div>
-      </div>
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-6xl mx-auto px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16 text-white"
+          className="text-center mb-12 text-white"
         >
-          <Badge className="mb-6 bg-white/20 text-white border-white/30 text-lg px-8 py-3 backdrop-blur-sm">
-            🚀 Ready to Transform Your Business?
-          </Badge>
-          <h2 className="text-5xl md:text-6xl font-black mb-8">
-            Get Your <span className="text-yellow-300">Free Consultation</span>
+          <div className="mb-4">
+            <span className="text-2xl">🚀</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-2">
+            Ready to Transform Your Business?
           </h2>
-          <p className="text-2xl text-blue-100 max-w-4xl mx-auto leading-relaxed">
+          <h3 className="text-2xl md:text-3xl font-bold mb-6">
+            Get Your <span className="text-orange-200">Free Consultation</span>
+          </h3>
+          <p className="text-lg text-orange-100 max-w-3xl mx-auto">
             Connect with our machinery experts and discover the perfect solution for your stone processing needs
           </p>
         </motion.div>
@@ -83,7 +81,7 @@ export default function ContactCTASection({ settings }: ContactCTASectionProps) 
           >
             <Card className="bg-white/95 backdrop-blur-sm border-0 shadow-2xl">
               <CardContent className="p-8">
-                <h3 className="text-3xl font-bold text-slate-900 mb-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">
                   Request a Quote
                 </h3>
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -178,13 +176,13 @@ export default function ContactCTASection({ settings }: ContactCTASectionProps) 
                     />
                   </div>
 
-                  <Button 
+                  <button 
                     type="submit" 
-                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg py-6"
+                    className="w-full bg-gradient-to-r from-primary to-primary-dark text-white py-3 px-6 rounded-lg hover:opacity-90 transition-all duration-300 font-medium"
                   >
-                    <Send className="mr-2 h-5 w-5" />
+                    <Send className="inline mr-2 h-5 w-5" />
                     Send Request
-                  </Button>
+                  </button>
                 </form>
               </CardContent>
             </Card>
@@ -201,35 +199,35 @@ export default function ContactCTASection({ settings }: ContactCTASectionProps) 
             {/* Direct Contact */}
             <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white">
               <CardContent className="p-8">
-                <h3 className="text-2xl font-bold mb-6">
+                <h3 className="text-xl font-bold text-white mb-4">
                   Talk to Our Experts
                 </h3>
                 <div className="space-y-6">
                   <div className="flex items-center">
-                    <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4">
                       <Phone className="h-6 w-6 text-white" />
                     </div>
                     <div>
                       <div className="font-semibold">Call Now</div>
-                      <div className="text-blue-200">{contactInfo.phones[0]}</div>
+                      <div className="text-orange-200">{contactInfo.phones[0]}</div>
                     </div>
                   </div>
                   <div className="flex items-center">
-                    <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4">
+                    <div className="w-12 h-12 bg-primary-dark rounded-full flex items-center justify-center mr-4">
                       <Mail className="h-6 w-6 text-white" />
                     </div>
                     <div>
                       <div className="font-semibold">Email Us</div>
-                      <div className="text-blue-200 text-sm">{contactInfo.email}</div>
+                      <div className="text-orange-200 text-sm">{contactInfo.email}</div>
                     </div>
                   </div>
                   <div className="flex items-center">
-                    <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mr-4">
+                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4">
                       <MapPin className="h-6 w-6 text-white" />
                     </div>
                     <div>
                       <div className="font-semibold">Visit Us</div>
-                      <div className="text-blue-200">{contactInfo.office}</div>
+                      <div className="text-orange-200">{contactInfo.office}</div>
                     </div>
                   </div>
                 </div>
@@ -251,7 +249,7 @@ export default function ContactCTASection({ settings }: ContactCTASectionProps) 
             {/* Service Features */}
             <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white">
               <CardContent className="p-6">
-                <h4 className="text-xl font-bold mb-4">What You Get:</h4>
+                <h4 className="text-lg font-bold text-white mb-4">What You Get:</h4>
                 <div className="space-y-3">
                   {[
                     "Free consultation & site survey",
@@ -262,7 +260,7 @@ export default function ContactCTASection({ settings }: ContactCTASectionProps) 
                   ].map((feature, index) => (
                     <div key={index} className="flex items-center">
                       <CheckCircle className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
-                      <span className="text-blue-100">{feature}</span>
+                      <span className="text-orange-100">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -283,7 +281,7 @@ export default function ContactCTASection({ settings }: ContactCTASectionProps) 
               <h3 className="text-3xl font-bold text-white mb-2">
                 Ready to Boost Your Production?
               </h3>
-              <p className="text-blue-100 text-lg">
+              <p className="text-orange-100 text-lg">
                 Join 500+ satisfied customers who trust our machinery
               </p>
             </div>
@@ -306,7 +304,7 @@ export default function ContactCTASection({ settings }: ContactCTASectionProps) 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center mt-12 text-blue-100"
+          className="text-center mt-12 text-orange-100"
         >
           <div className="flex items-center justify-center mb-2">
             <Clock className="h-5 w-5 mr-2" />

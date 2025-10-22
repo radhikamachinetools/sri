@@ -9,10 +9,10 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
     const baseClasses = "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
     
     const variants = {
-      default: "border-transparent bg-gray-100 text-gray-700 hover:bg-gray-200",
-      secondary: "border-transparent bg-gray-50 text-gray-600 hover:bg-gray-100",
+      default: "border-transparent bg-orange-100 text-orange-700 hover:bg-orange-200",
+      secondary: "border-transparent bg-orange-50 text-orange-600 hover:bg-orange-100",
       destructive: "border-transparent bg-red-100 text-red-700 hover:bg-red-200",
-      outline: "border-gray-300 text-gray-600 hover:bg-gray-50"
+      outline: "border-orange-300 text-orange-600 hover:bg-orange-50"
     }
     
     return (

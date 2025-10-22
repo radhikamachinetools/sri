@@ -25,23 +25,23 @@ export default function FeatureCardClient({
     >
       <div className="text-center">
         {/* Icon Container */}
-        <div className="w-20 h-20 bg-gradient-to-br from-brand-green-light to-brand-green rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+        <div className="w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
           {icon}
         </div>
 
         {/* Title */}
-        <h3 className="text-xl lg:text-2xl font-bold mb-4 text-dark-gray group-hover:text-brand-green-dark transition-colors duration-300">
+        <h3 className="text-xl lg:text-2xl font-bold mb-4 text-gray-900 group-hover:text-primary transition-colors duration-300">
           {title}
         </h3>
 
         {/* Description */}
-        <p className="text-muted leading-relaxed">
+        <p className="text-gray-600 leading-relaxed">
           {children}
         </p>
       </div>
 
       {/* Decorative Element */}
-      <div className="mt-6 w-12 h-1 bg-gradient-to-r from-brand-green to-brand-accent rounded-full mx-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div className="mt-6 w-12 h-1 bg-gradient-primary rounded-full mx-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     </motion.div>
   );
 }

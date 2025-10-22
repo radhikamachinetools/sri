@@ -57,7 +57,7 @@ export default function HeroClient() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm font-medium"
         >
-          <span className="w-2 h-2 bg-brand-accent rounded-full animate-pulse"></span>
+          <span className="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
           Trusted by 500+ Industries Worldwide
         </motion.div>
 
@@ -95,14 +95,14 @@ export default function HeroClient() {
         >
           <Link
             href="/products"
-            className="group relative bg-gradient-to-r from-secondary to-accent text-white font-bold py-5 px-10 rounded-2xl text-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 flex items-center gap-4 min-w-[280px] justify-center overflow-hidden"
+            className="group relative bg-gradient-to-r from-primary to-primary-dark text-white font-bold py-5 px-10 rounded-2xl text-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 flex items-center gap-4 min-w-[280px] justify-center overflow-hidden"
           >
             <span className="relative z-10">{settings.ctaText}</span>
             <ArrowRight 
               size={24} 
               className="relative z-10 transition-transform duration-300 group-hover:translate-x-2" 
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-accent to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-dark to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </Link>
           
           <Link
@@ -129,7 +129,7 @@ export default function HeroClient() {
               transition={{ duration: 0.6, delay: 0.9 + index * 0.1 }}
               className="text-center bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/20"
             >
-              <div className="text-4xl lg:text-5xl font-black text-secondary mb-2">{stat.number}</div>
+              <div className="text-4xl lg:text-5xl font-black text-primary mb-2">{stat.number}</div>
               <div className="text-base text-gray-200 font-medium">{stat.label}</div>
             </motion.div>
           ))}

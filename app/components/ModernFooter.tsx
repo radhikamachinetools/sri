@@ -52,66 +52,39 @@ export default function ModernFooter() {
 
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Company Info */}
-          <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center space-x-3 mb-6">
+          <div>
+            <Link href="/" className="flex items-center space-x-3 mb-4">
               <Image
                 src="/images/radhika-logo.png"
                 alt="Shree Radhey Industries"
-                width={50}
-                height={50}
+                width={40}
+                height={40}
                 className="rounded-full"
               />
               <div>
-                <h3 className="text-xl font-bold">Shree Radhey Industries</h3>
-                <p className="text-sm text-gray-400">Engineering Excellence</p>
+                <h3 className="text-lg font-bold">Shree Radhey Industries</h3>
+                <p className="text-sm text-primary">Engineering Excellence</p>
               </div>
             </Link>
-            <p className="text-gray-300 mb-6 leading-relaxed">
-              Leading manufacturer of premium stone processing machinery with over 25 years of industry expertise.
+            <p className="text-gray-300 text-sm leading-relaxed">
+              Leading manufacturer of premium stone processing machinery with over 25 years of expertise.
             </p>
-            <div className="flex space-x-4">
-              <Link
-                href={`https://${contact?.website || '#'}`}
-                className="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-primary-dark transition-colors"
-              >
-                <Globe size={18} />
-              </Link>
-            </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
-            <ul className="space-y-3">
+            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors flex items-center group"
+                    className="text-gray-300 hover:text-primary transition-colors text-sm"
                   >
-                    <ArrowRight size={14} className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                     {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="text-lg font-semibold mb-6">Our Services</h4>
-            <ul className="space-y-3">
-              {services.map((service) => (
-                <li key={service.name}>
-                  <Link
-                    href={service.href}
-                    className="text-gray-300 hover:text-white transition-colors flex items-center group"
-                  >
-                    <ArrowRight size={14} className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    {service.name}
                   </Link>
                 </li>
               ))}
@@ -120,33 +93,17 @@ export default function ModernFooter() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Contact Info</h4>
+            <h4 className="font-semibold mb-4">Contact</h4>
             {contact && (
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <MapPin className="text-primary mt-1 flex-shrink-0" size={18} />
-                  <div>
-                    <p className="text-sm font-medium text-white mb-1">Office:</p>
-                    <p className="text-sm text-gray-300">{contact.office}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-3">
-                  <MapPin className="text-primary mt-1 flex-shrink-0" size={18} />
-                  <div>
-                    <p className="text-sm font-medium text-white mb-1">Factory:</p>
-                    <p className="text-sm text-gray-300">{contact.factory}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center space-x-3">
-                  <Phone className="text-primary flex-shrink-0" size={18} />
+              <div className="space-y-3 text-sm">
+                <div className="flex items-center space-x-2">
+                  <Phone className="text-primary flex-shrink-0" size={16} />
                   <div>
                     {contact.phones.map((phone, index) => (
                       <a
                         key={index}
                         href={`tel:${phone}`}
-                        className="block text-sm text-gray-300 hover:text-white transition-colors"
+                        className="block text-gray-300 hover:text-primary transition-colors"
                       >
                         {phone}
                       </a>
@@ -154,21 +111,19 @@ export default function ModernFooter() {
                   </div>
                 </div>
                 
-                <div className="flex items-center space-x-3">
-                  <Mail className="text-primary flex-shrink-0" size={18} />
+                <div className="flex items-center space-x-2">
+                  <Mail className="text-primary flex-shrink-0" size={16} />
                   <a
                     href={`mailto:${contact.email}`}
-                    className="text-sm text-gray-300 hover:text-white transition-colors"
+                    className="text-gray-300 hover:text-primary transition-colors"
                   >
                     {contact.email}
                   </a>
                 </div>
                 
-                <div className="flex items-center space-x-3">
-                  <Clock className="text-primary flex-shrink-0" size={18} />
-                  <div className="text-sm text-gray-300">
-                    Mon - Sat: 9:00 AM - 6:00 PM
-                  </div>
+                <div className="flex items-start space-x-2">
+                  <MapPin className="text-primary mt-1 flex-shrink-0" size={16} />
+                  <p className="text-gray-300">{contact.office}</p>
                 </div>
               </div>
             )}
@@ -176,21 +131,10 @@ export default function ModernFooter() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-gray-800 mt-8 pt-6 text-center">
           <p className="text-gray-400 text-sm">
             © {new Date().getFullYear()} Shree Radhey Industries. All rights reserved.
           </p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link href="/privacy-policy" className="text-gray-400 hover:text-white text-sm transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/terms-and-conditions" className="text-gray-400 hover:text-white text-sm transition-colors">
-              Terms & Conditions
-            </Link>
-            <Link href="/sitemap" className="text-gray-400 hover:text-white text-sm transition-colors">
-              Sitemap
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

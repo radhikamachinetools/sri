@@ -60,17 +60,17 @@ export default function AdminLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
       <div className="flex">
-        <aside className="w-72 bg-white/90 backdrop-blur-sm shadow-xl border-r border-slate-200 min-h-screen">
-          <div className="p-8 border-b border-slate-200">
+        <aside className="w-72 bg-white/90 backdrop-blur-sm shadow-xl border-r border-gray-200 min-h-screen">
+          <div className="p-8 border-b border-gray-200">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
                 <Settings className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h2 className="text-xl font-black text-slate-900">Admin Panel</h2>
-                <p className="text-sm text-slate-500">Shree Radhey Industries</p>
+                <h2 className="text-xl font-black text-gray-900">Admin Panel</h2>
+                <p className="text-sm text-primary">Shree Radhey Industries</p>
               </div>
             </div>
           </div>
@@ -85,8 +85,8 @@ export default function AdminLayout({
                     href={item.href}
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                       isActive 
-                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg' 
-                        : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
+                        ? 'admin-nav-active' 
+                        : 'admin-nav-inactive'
                     }`}
                   >
                     <item.icon size={20} />
@@ -96,10 +96,10 @@ export default function AdminLayout({
               })}
             </div>
             
-            <div className="mt-8 pt-4 border-t border-slate-200">
+            <div className="mt-8 pt-4 border-t border-gray-200">
               <Link
                 href="/"
-                className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-slate-100 rounded-xl transition-all duration-200"
+                className="admin-nav-inactive flex items-center gap-3 px-4 py-3 rounded-xl"
               >
                 <Home size={20} />
                 <span className="font-medium">View Website</span>

@@ -15,20 +15,21 @@ export default function InfoPageLayout({
 }: InfoPageLayoutProps) {
   return (
     <div>
-      <motion.section
-        className="py-20 bg-gradient-to-r from-brand-green-dark to-brand-green-deeper text-white"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold">{title}</h1>
+      <section className="py-16 bg-gradient-to-r from-primary to-primary-dark text-white">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold">{title}</h1>
         </div>
-      </motion.section>
+      </section>
 
       <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="prose lg:prose-lg max-w-none text-gray-700">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="prose prose-lg max-w-none text-gray-700">
+            <style jsx global>{`
+              .prose h2 { color: #1f2937; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; }
+              .prose p { margin-bottom: 1rem; line-height: 1.7; }
+              .prose ul { margin: 1rem 0; }
+              .prose li { margin: 0.5rem 0; }
+            `}</style>
             {children}
           </div>
         </div>

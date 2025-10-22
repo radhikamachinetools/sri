@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Package, Mail, Image, BarChart3, Plus, Eye, Settings, TrendingUp } from "lucide-react";
+import { Package, Mail, Image, BarChart3, Plus, Eye, Settings, TrendingUp, FileText, Shield } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
@@ -40,7 +40,7 @@ export default function AdminDashboard() {
       title: "Add New Product",
       href: "/admin/products/create",
       icon: Plus,
-      color: "from-blue-600 to-indigo-600"
+      color: "bg-gradient-primary"
     },
     {
       title: "Upload Media",
@@ -58,7 +58,7 @@ export default function AdminDashboard() {
       title: "Settings",
       href: "/admin/settings",
       icon: Settings,
-      color: "from-orange-600 to-red-600"
+      color: "bg-gradient-accent"
     }
   ];
 
@@ -67,7 +67,7 @@ export default function AdminDashboard() {
       title: "Total Products",
       value: stats.totalProducts,
       icon: Package,
-      color: "from-blue-500 to-indigo-500",
+      color: "bg-gradient-primary",
       change: "+2 this month"
     },
     {
@@ -88,7 +88,7 @@ export default function AdminDashboard() {
       title: "Completed",
       value: stats.completedContacts,
       icon: TrendingUp,
-      color: "from-purple-500 to-pink-500",
+      color: "bg-gradient-accent",
       change: "+5 today"
     }
   ];
@@ -106,7 +106,7 @@ export default function AdminDashboard() {
           <h1 className="text-4xl font-black text-slate-900 mb-2">Dashboard</h1>
           <p className="text-slate-600 text-lg">Welcome back! Here's what's happening with your business.</p>
         </div>
-        <div className="bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 px-6 py-3 rounded-full text-lg font-semibold">
+        <div className="bg-gradient-to-r from-orange-100 to-red-100 text-primary px-6 py-3 rounded-full text-lg font-semibold">
           🏭 Admin Panel
         </div>
       </motion.div>
@@ -121,10 +121,10 @@ export default function AdminDashboard() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0"
+              className="admin-stat-card"
             >
               <div className="flex items-center justify-between mb-4">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${stat.color} flex items-center justify-center shadow-lg`}>
+                <div className={`w-12 h-12 rounded-xl ${stat.color} flex items-center justify-center shadow-lg`}>
                   <IconComponent className="h-6 w-6 text-white" />
                 </div>
                 <div className="flex items-center text-green-600">
@@ -148,7 +148,7 @@ export default function AdminDashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="bg-white rounded-2xl p-8 shadow-lg border-0"
+        className="admin-card p-8"
       >
         <h2 className="text-2xl font-bold text-slate-900 mb-6">Quick Actions</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -167,13 +167,13 @@ export default function AdminDashboard() {
       </motion.div>
 
       {/* Management Links */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         <Link
           href="/admin/products"
-          className="bg-white rounded-2xl p-8 shadow-lg border-0 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
+          className="admin-card p-8 group"
         >
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+            <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
               <Package className="text-white h-8 w-8" />
             </div>
             <div>
@@ -185,7 +185,7 @@ export default function AdminDashboard() {
 
         <Link
           href="/admin/contacts"
-          className="bg-white rounded-2xl p-8 shadow-lg border-0 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
+          className="admin-card p-8 group"
         >
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
@@ -200,7 +200,7 @@ export default function AdminDashboard() {
 
         <Link
           href="/admin/media"
-          className="bg-white rounded-2xl p-8 shadow-lg border-0 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
+          className="admin-card p-8 group"
         >
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
@@ -212,6 +212,36 @@ export default function AdminDashboard() {
             </div>
           </div>
         </Link>
+
+        <Link
+          href="/admin/terms-questions"
+          className="admin-card p-8 group"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+              <FileText className="text-white h-8 w-8" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-slate-900 mb-1">Terms Questions</h3>
+              <p className="text-slate-600">View T&C inquiries</p>
+            </div>
+          </div>
+        </Link>
+
+        <Link
+          href="/admin/privacy-concerns"
+          className="admin-card p-8 group"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+              <Shield className="text-white h-8 w-8" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-slate-900 mb-1">Privacy Concerns</h3>
+              <p className="text-slate-600">Handle data requests</p>
+            </div>
+          </div>
+        </Link>
       </div>
 
       {/* Website Preview */}
@@ -219,7 +249,7 @@ export default function AdminDashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.6 }}
-        className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border-0"
+        className="bg-gradient-to-r from-orange-50 to-red-50 rounded-2xl p-8 border-0"
       >
         <div className="flex items-center justify-between">
           <div>
@@ -231,7 +261,7 @@ export default function AdminDashboard() {
             </p>
           </div>
           <Link href="/">
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-semibold flex items-center shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="admin-button-primary flex items-center">
               <Eye className="mr-2 h-5 w-5" />
               View Website
             </div>
