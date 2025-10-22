@@ -1,0 +1,48 @@
+{
+  "hero": {
+    "title": "Revolutionary Stone Processing Technology",
+    "subtitle": "Elevate your manufacturing capabilities with precision-engineered machinery that delivers exceptional performance and reliability",
+    "ctaText": "Discover Innovation",
+    "backgroundImage": "/images/hero-bg.jpg",
+    "stats": [
+      { "number": "30+", "label": "Years Innovation" },
+      { "number": "750+", "label": "Global Partners" },
+      { "number": "85+", "label": "Product Lines" },
+      { "number": "24/7", "label": "Expert Support" }
+    ]
+  },
+  "about": {
+    "title": "Shree Radhey Industries - Innovation Leaders",
+    "description": "Premier manufacturer of advanced stone processing equipment with three decades of engineering excellence and global market leadership.",
+    "features": [
+      "ISO 9001:2015 Certified Excellence",
+      "Worldwide Service Infrastructure",
+      "Bespoke Engineering Solutions",
+      "Round-the-Clock Technical Assistance"
+    ]
+  },
+  "services": [
+    {
+      "title": "Custom Manufacturing",
+      "description": "Tailored machinery solutions for your specific requirements",
+      "icon": "wrench"
+    },
+    {
+      "title": "Installation & Setup",
+      "description": "Professional installation and commissioning services",
+      "icon": "settings"
+    },
+    {
+      "title": "Maintenance Support",
+      "description": "Comprehensive maintenance and repair services",
+      "icon": "shield"
+    }
+  ],
+  "contact": {
+    "office": "Mali, Nagorion Ka Bass, Shiv Temple, Jodhpur 342001 India",
+    "factory": "Khasra No. 155/1, Plot No. 6-B, Ram Nagar Salawas Road, Sangriya, Jodhpur 342013 India",
+    "phones": ["+91 9983813366", "+91 9950329353"],
+    "email": "shreeradheyindustriesjodhpur@gmail.com",
+    "website": "www.shreeradheyindustriesjodhpur.com"
+  }
+}

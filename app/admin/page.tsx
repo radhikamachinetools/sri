@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Package, Mail, Image, BarChart3 } from "lucide-react";
+import { Package, Mail, Image, BarChart3, Plus, Eye, Settings, TrendingUp } from "lucide-react";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -34,81 +35,209 @@ export default function AdminDashboard() {
     }
   };
 
+  const quickActions = [
+    {
+      title: "Add New Product",
+      href: "/admin/products/create",
+      icon: Plus,
+      color: "from-blue-600 to-indigo-600"
+    },
+    {
+      title: "Upload Media",
+      href: "/admin/media/create",
+      icon: Image,
+      color: "from-green-600 to-emerald-600"
+    },
+    {
+      title: "View Inquiries",
+      href: "/admin/contacts",
+      icon: Eye,
+      color: "from-purple-600 to-pink-600"
+    },
+    {
+      title: "Settings",
+      href: "/admin/settings",
+      icon: Settings,
+      color: "from-orange-600 to-red-600"
+    }
+  ];
+
+  const statCards = [
+    {
+      title: "Total Products",
+      value: stats.totalProducts,
+      icon: Package,
+      color: "from-blue-500 to-indigo-500",
+      change: "+2 this month"
+    },
+    {
+      title: "Total Contacts",
+      value: stats.totalContacts,
+      icon: Mail,
+      color: "from-green-500 to-emerald-500",
+      change: "+12 this week"
+    },
+    {
+      title: "Pending Queries",
+      value: stats.pendingContacts,
+      icon: BarChart3,
+      color: "from-yellow-500 to-orange-500",
+      change: "Needs attention"
+    },
+    {
+      title: "Completed",
+      value: stats.completedContacts,
+      icon: TrendingUp,
+      color: "from-purple-500 to-pink-500",
+      change: "+5 today"
+    }
+  ];
+
   return (
-    <div className="w-full space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-        <p className="text-muted mt-1">Manage your website content</p>
+    <div className="space-y-8">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex items-center justify-between"
+      >
+        <div>
+          <h1 className="text-4xl font-black text-slate-900 mb-2">Dashboard</h1>
+          <p className="text-slate-600 text-lg">Welcome back! Here's what's happening with your business.</p>
+        </div>
+        <div className="bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 px-6 py-3 rounded-full text-lg font-semibold">
+          🏭 Admin Panel
+        </div>
+      </motion.div>
+
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {statCards.map((stat, index) => {
+          const IconComponent = stat.icon;
+          return (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${stat.color} flex items-center justify-center shadow-lg`}>
+                  <IconComponent className="h-6 w-6 text-white" />
+                </div>
+                <div className="flex items-center text-green-600">
+                  <TrendingUp className="h-4 w-4 mr-1" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-sm font-semibold text-slate-600 uppercase tracking-wide">
+                  {stat.title}
+                </h3>
+                <div className="text-3xl font-black text-slate-900">{stat.value}</div>
+                <p className="text-sm text-slate-500">{stat.change}</p>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Quick Actions */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+        className="bg-white rounded-2xl p-8 shadow-lg border-0"
+      >
+        <h2 className="text-2xl font-bold text-slate-900 mb-6">Quick Actions</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {quickActions.map((action, index) => {
+            const IconComponent = action.icon;
+            return (
+              <Link key={index} href={action.href}>
+                <div className={`bg-gradient-to-r ${action.color} hover:opacity-90 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-center`}>
+                  <IconComponent className="h-8 w-8 mx-auto mb-3" />
+                  <div className="font-semibold">{action.title}</div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </motion.div>
+
+      {/* Management Links */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Link
           href="/admin/products"
-          className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow group"
+          className="bg-white rounded-2xl p-8 shadow-lg border-0 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
         >
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-brand-green rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Package className="text-white" size={24} />
+            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+              <Package className="text-white h-8 w-8" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">Products</h3>
-              <p className="text-sm text-gray-600">Manage machinery products</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-1">Products</h3>
+              <p className="text-slate-600">Manage machinery products</p>
             </div>
           </div>
         </Link>
 
         <Link
           href="/admin/contacts"
-          className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow group"
+          className="bg-white rounded-2xl p-8 shadow-lg border-0 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
         >
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Mail className="text-white" size={24} />
+            <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+              <Mail className="text-white h-8 w-8" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">Contact Messages</h3>
-              <p className="text-sm text-gray-600">View customer inquiries</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-1">Contact Messages</h3>
+              <p className="text-slate-600">View customer inquiries</p>
             </div>
           </div>
         </Link>
 
         <Link
           href="/admin/media"
-          className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow group"
+          className="bg-white rounded-2xl p-8 shadow-lg border-0 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
         >
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Image className="text-white" size={24} />
+            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+              <Image className="text-white h-8 w-8" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">Media</h3>
-              <p className="text-sm text-gray-600">Manage images and videos</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-1">Media</h3>
+              <p className="text-slate-600">Manage images and videos</p>
             </div>
           </div>
         </Link>
       </div>
 
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Stats</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-brand-green">{stats.totalProducts}</div>
-            <div className="text-sm text-gray-600">Total Products</div>
+      {/* Website Preview */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+        className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border-0"
+      >
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-2xl font-bold text-slate-900 mb-2">
+              Website Performance
+            </h3>
+            <p className="text-slate-600">
+              Your website is performing well with modern design and optimized user experience.
+            </p>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-blue-500">{stats.totalContacts}</div>
-            <div className="text-sm text-gray-600">Total Contacts</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-yellow-500">{stats.pendingContacts}</div>
-            <div className="text-sm text-gray-600">Pending Queries</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-green-500">{stats.completedContacts}</div>
-            <div className="text-sm text-gray-600">Completed Queries</div>
-          </div>
+          <Link href="/">
+            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-semibold flex items-center shadow-lg hover:shadow-xl transition-all duration-300">
+              <Eye className="mr-2 h-5 w-5" />
+              View Website
+            </div>
+          </Link>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

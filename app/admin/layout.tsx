@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import { Package, Mail, Image, LogOut } from "lucide-react";
+import { Package, Mail, Image, LogOut, Settings, BarChart3, Home } from "lucide-react";
 
 export default function AdminLayout({
   children,
@@ -38,8 +38,8 @@ export default function AdminLayout({
   };
 
   if (loading) {
-    return <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-green"></div>
+    return <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent"></div>
     </div>;
   }
 
@@ -51,61 +51,74 @@ export default function AdminLayout({
     return null;
   }
 
+  const navItems = [
+    { href: '/admin', icon: BarChart3, label: 'Dashboard' },
+    { href: '/admin/products', icon: Package, label: 'Products' },
+    { href: '/admin/contacts', icon: Mail, label: 'Contacts' },
+    { href: '/admin/media', icon: Image, label: 'Media' },
+    { href: '/admin/settings', icon: Settings, label: 'Settings' }
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
       <div className="flex">
-        <aside className="w-64 bg-white shadow-sm min-h-screen">
-          <div className="p-6">
-            <h2 className="text-xl font-bold text-gray-900">Admin Panel</h2>
+        <aside className="w-72 bg-white/90 backdrop-blur-sm shadow-xl border-r border-slate-200 min-h-screen">
+          <div className="p-8 border-b border-slate-200">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
+                <Settings className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h2 className="text-xl font-black text-slate-900">Admin Panel</h2>
+                <p className="text-sm text-slate-500">Shree Radhey Industries</p>
+              </div>
+            </div>
           </div>
-          <nav className="mt-6">
-            <Link
-              href="/admin"
-              className={`flex items-center gap-3 px-6 py-3 text-gray-700 hover:bg-gray-50 ${
-                pathname === '/admin' ? 'bg-brand-green text-white hover:bg-brand-green' : ''
-              }`}
-            >
-              <Package size={20} />
-              Dashboard
-            </Link>
-            <Link
-              href="/admin/products"
-              className={`flex items-center gap-3 px-6 py-3 text-gray-700 hover:bg-gray-50 ${
-                pathname.startsWith('/admin/products') ? 'bg-brand-green text-white hover:bg-brand-green' : ''
-              }`}
-            >
-              <Package size={20} />
-              Products
-            </Link>
-            <Link
-              href="/admin/contacts"
-              className={`flex items-center gap-3 px-6 py-3 text-gray-700 hover:bg-gray-50 ${
-                pathname === '/admin/contacts' ? 'bg-brand-green text-white hover:bg-brand-green' : ''
-              }`}
-            >
-              <Mail size={20} />
-              Contacts
-            </Link>
-            <Link
-              href="/admin/media"
-              className={`flex items-center gap-3 px-6 py-3 text-gray-700 hover:bg-gray-50 ${
-                pathname === '/admin/media' ? 'bg-brand-green text-white hover:bg-brand-green' : ''
-              }`}
-            >
-              <Image size={20} />
-              Media
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-3 px-6 py-3 text-gray-700 hover:bg-gray-50 w-full text-left"
-            >
-              <LogOut size={20} />
-              Logout
-            </button>
+          
+          <nav className="p-4">
+            <div className="space-y-2">
+              {navItems.map((item) => {
+                const isActive = pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href));
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                      isActive 
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg' 
+                        : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
+                    }`}
+                  >
+                    <item.icon size={20} />
+                    <span className="font-medium">{item.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
+            
+            <div className="mt-8 pt-4 border-t border-slate-200">
+              <Link
+                href="/"
+                className="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-slate-100 rounded-xl transition-all duration-200"
+              >
+                <Home size={20} />
+                <span className="font-medium">View Website</span>
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-all duration-200 w-full text-left mt-2"
+              >
+                <LogOut size={20} />
+                <span className="font-medium">Logout</span>
+              </button>
+            </div>
           </nav>
         </aside>
+        
         <main className="flex-1 p-8">
-          {children}
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
         </main>
       </div>
     </div>
