@@ -121,60 +121,61 @@ export default function NewHomepage({ featuredProducts }: NewHomepageProps) {
                 );
               }
               return (
-              <motion.div
-                key={product._id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className="group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur-sm">
-                  <CardContent className="p-0">
-                    <div className="relative overflow-hidden rounded-t-lg">
-                      {product.imageUrl ? (
-                        <Image
-                          src={product.imageUrl}
-                          alt={product.name || 'Product image'}
-                          width={400}
-                          height={300}
-                          className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div className="w-full h-64 bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
-                          <Wrench className="h-16 w-16 text-slate-400" />
+                <motion.div
+                  key={product._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card className="group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-0 bg-white/80 backdrop-blur-sm">
+                    <CardContent className="p-0">
+                      <div className="relative overflow-hidden rounded-t-lg">
+                        {product.imageUrl ? (
+                          <Image
+                            src={product.imageUrl}
+                            alt={product.name || 'Product image'}
+                            width={400}
+                            height={300}
+                            className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                        ) : (
+                          <div className="w-full h-64 bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
+                            <Wrench className="h-16 w-16 text-slate-400" />
+                          </div>
+                        )}
+                        <div className="absolute top-4 right-4">
+                          <Badge className="bg-blue-600 text-white">
+                            {product.category}
+                          </Badge>
                         </div>
-                      )}
-                      <div className="absolute top-4 right-4">
-                        <Badge className="bg-blue-600 text-white">
-                          {product.category}
-                        </Badge>
                       </div>
-                    </div>
-                    
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
-                        {product.name || 'Unnamed Product'}
-                      </h3>
-                      <p className="text-slate-600 mb-4 line-clamp-2">
-                        {product.shortDescription || 'No description available'}
-                      </p>
                       
-                      <div className="flex justify-between items-center">
-                        <Link href={`/products/${product.slug}`}>
-                          <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
-                            View Details
-                            <ArrowRight className="ml-2 h-4 w-4" />
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                          {product.name || 'Unnamed Product'}
+                        </h3>
+                        <p className="text-slate-600 mb-4 line-clamp-2">
+                          {product.shortDescription || 'No description available'}
+                        </p>
+                        
+                        <div className="flex justify-between items-center">
+                          <Link href={`/products/${product.slug}`}>
+                            <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+                              View Details
+                              <ArrowRight className="ml-2 h-4 w-4" />
+                            </Button>
+                          </Link>
+                          <Button variant="outline" size="sm">
+                            <Phone className="h-4 w-4" />
                           </Button>
-                        </Link>
-                        <Button variant="outline" size="sm">
-                          <Phone className="h-4 w-4" />
-                        </Button>
+                        </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            })}
           </div>
           
           <div className="text-center mt-12">
