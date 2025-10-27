@@ -3,6 +3,23 @@
 import { useState, useEffect } from "react";
 import { Shield, Mail, Calendar, User, AlertTriangle, CheckCircle, Clock } from "lucide-react";
 
+// XSS Protection utility
+const sanitizeText = (text: string): string => {
+  if (!text) return '';
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;');
+};
+
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email) && !/<|>|script/i.test(email);
+};
+
 interface PrivacyConcern {
   id: string;
   name: string;
@@ -17,6 +34,7 @@ interface PrivacyConcern {
 export default function PrivacyConcernsPage() {
   const [concerns, setConcerns] = useState<PrivacyConcern[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchConcerns();
@@ -24,13 +42,17 @@ export default function PrivacyConcernsPage() {
 
   const fetchConcerns = async () => {
     try {
+      setError(null);
       const res = await fetch('/api/privacy-concerns');
       const data = await res.json();
       if (data.success) {
         setConcerns(data.concerns.reverse()); // Show newest first
+      } else {
+        setError('Failed to load privacy concerns');
       }
     } catch (error) {
       console.error('Error fetching concerns:', error);
+      setError('Unable to connect to server. Please check your connection.');
     } finally {
       setLoading(false);
     }
@@ -59,6 +81,24 @@ export default function PrivacyConcernsPage() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-slate-600">Loading privacy concerns...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-8">
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <Shield className="h-16 w-16 text-red-400 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-red-800 mb-2">Error Loading Privacy Concerns</h3>
+          <p className="text-red-600 mb-4">{error}</p>
+          <button 
+            onClick={() => { setError(null); fetchConcerns(); }}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+          >
+            Try Again
+          </button>
         </div>
       </div>
     );
@@ -153,11 +193,13 @@ export default function PrivacyConcernsPage() {
                       <User className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-900">{concern.name}</h3>
+                      <h3 className="font-semibold text-slate-900">
+                        {sanitizeText(concern.name)}
+                      </h3>
                       <div className="flex items-center text-sm text-slate-600 space-x-4">
                         <span className="flex items-center">
                           <Mail className="h-4 w-4 mr-1" />
-                          {concern.email}
+                          {isValidEmail(concern.email) ? concern.email : 'Invalid Email'}
                         </span>
                         <span className="flex items-center">
                           <Calendar className="h-4 w-4 mr-1" />
@@ -176,20 +218,28 @@ export default function PrivacyConcernsPage() {
                     </span>
                     {concern.dataType && (
                       <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-semibold">
-                        {concern.dataType}
+                        {sanitizeText(concern.dataType)}
                       </span>
                     )}
                   </div>
                 </div>
                 
                 <div className="mb-4">
-                  <p className="text-slate-700 leading-relaxed">{concern.concern}</p>
+                  <p className="text-slate-700 leading-relaxed">
+                    {sanitizeText(concern.concern)}
+                  </p>
                 </div>
                 
                 <div className="flex items-center justify-between">
                   <div className="flex space-x-2">
                     <button
-                      onClick={() => window.location.href = `mailto:${concern.email}`}
+                      onClick={() => {
+                        if (isValidEmail(concern.email)) {
+                          window.location.href = `mailto:${encodeURIComponent(concern.email)}`;
+                        } else {
+                          alert('Invalid email address');
+                        }
+                      }}
                       className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:opacity-90 transition-all text-sm font-semibold"
                     >
                       Reply via Email

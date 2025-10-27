@@ -23,6 +23,7 @@ export default function ContactsAdmin() {
   const [confirmModal, setConfirmModal] = useState<{show: boolean, contactId: string, contactName: string, newStatus: string}>({show: false, contactId: '', contactName: '', newStatus: ''});
   const [toast, setToast] = useState<{message: string, type: 'success' | 'error'} | null>(null);
   const [deleteModal, setDeleteModal] = useState<{show: boolean, contactId: string, contactName: string}>({show: false, contactId: '', contactName: ''});
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchContacts();
@@ -35,8 +36,11 @@ export default function ContactsAdmin() {
       if (data.success) {
         setContacts(data.contacts);
       }
-    } catch {
-      console.error('Error fetching contacts');
+    } catch (error) {
+      console.error('Error fetching contacts:', error);
+      setError('Failed to load contacts. Please try again.');
+      setToast({ message: 'Failed to load contacts', type: 'error' });
+      setTimeout(() => setToast(null), 3000);
     } finally {
       setLoading(false);
     }
@@ -118,8 +122,32 @@ export default function ContactsAdmin() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="w-full">
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <h3 className="text-lg font-semibold text-red-800 mb-2">Error Loading Contacts</h3>
+          <p className="text-red-600 mb-4">{error}</p>
+          <button 
+            onClick={() => { setError(null); fetchContacts(); }}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full space-y-6">
+      {toast && (
+        <div className={`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg ${
+          toast.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        }`}>
+          {toast.message}
+        </div>
+      )}
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Contact Messages</h1>

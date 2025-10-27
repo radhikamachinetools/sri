@@ -20,6 +20,7 @@ export default function EditMedia() {
   const params = useParams();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [media, setMedia] = useState<MediaItem | null>(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -112,6 +113,14 @@ export default function EditMedia() {
       }
     } catch (error) {
       console.error('Error updating media:', error);
+      setError('Failed to update media. Please try again.');
+      
+      // Show error toast
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 p-4 rounded-lg shadow-lg bg-red-500 text-white';
+      toast.textContent = '✗ Failed to update media';
+      document.body.appendChild(toast);
+      setTimeout(() => document.body.removeChild(toast), 3000);
     } finally {
       setSaving(false);
     }
@@ -164,6 +173,15 @@ export default function EditMedia() {
         </div>
       </div>
 
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl mb-6">
+          <div className="flex items-center justify-between">
+            <span>{error}</span>
+            <button onClick={() => setError(null)} className="text-red-400 hover:text-red-600">✕</button>
+          </div>
+        </div>
+      )}
+      
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="p-8 space-y-6">
           <div>

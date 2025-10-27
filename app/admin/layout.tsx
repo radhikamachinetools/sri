@@ -60,63 +60,63 @@ export default function AdminLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-teal-50">
       <div className="flex">
-        <aside className="w-72 bg-white/90 backdrop-blur-sm shadow-xl border-r border-gray-200 min-h-screen">
-          <div className="p-8 border-b border-gray-200">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
-                <Settings className="h-6 w-6 text-white" />
+        <aside className="w-80 bg-white/95 backdrop-blur-md shadow-2xl border-r border-slate-200/60 min-h-screen">
+          <div className="p-8 border-b border-slate-200/60">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-700 rounded-2xl flex items-center justify-center shadow-lg">
+                <Settings className="h-7 w-7 text-white" />
               </div>
               <div>
-                <h2 className="text-xl font-black text-gray-900">Admin Panel</h2>
-                <p className="text-sm text-primary">Shree Radhey Industries</p>
+                <h2 className="text-2xl font-bold text-slate-900">Admin Portal</h2>
+                <p className="text-sm text-teal-600 font-medium">Shree Radhey Industries</p>
               </div>
             </div>
           </div>
           
-          <nav className="p-4">
-            <div className="space-y-2">
+          <nav className="p-6">
+            <div className="space-y-3">
               {navItems.map((item) => {
                 const isActive = pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href));
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                    className={`flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-300 font-medium ${
                       isActive 
-                        ? 'admin-nav-active' 
-                        : 'admin-nav-inactive'
+                        ? 'admin-nav-active shadow-lg' 
+                        : 'admin-nav-inactive hover:bg-slate-50'
                     }`}
                   >
-                    <item.icon size={20} />
-                    <span className="font-medium">{item.label}</span>
+                    <item.icon size={22} className={isActive ? 'text-white' : 'text-slate-500'} />
+                    <span className="text-sm font-semibold">{item.label}</span>
                   </Link>
                 );
               })}
             </div>
             
-            <div className="mt-8 pt-4 border-t border-gray-200">
+            <div className="mt-8 pt-6 border-t border-slate-200/60">
               <Link
                 href="/"
-                className="admin-nav-inactive flex items-center gap-3 px-4 py-3 rounded-xl"
+                className="admin-nav-inactive flex items-center gap-4 px-5 py-4 rounded-2xl mb-3"
               >
-                <Home size={20} />
-                <span className="font-medium">View Website</span>
+                <Home size={22} className="text-slate-500" />
+                <span className="font-semibold text-sm">View Website</span>
               </Link>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-all duration-200 w-full text-left mt-2"
+                className="flex items-center gap-4 px-5 py-4 text-red-600 hover:bg-red-50 rounded-2xl transition-all duration-300 w-full text-left font-semibold text-sm"
               >
-                <LogOut size={20} />
-                <span className="font-medium">Logout</span>
+                <LogOut size={22} />
+                <span>Logout</span>
               </button>
             </div>
           </nav>
         </aside>
         
-        <main className="flex-1 p-8">
-          <div className="max-w-7xl mx-auto">
+        <main className="flex-1 p-10 bg-gradient-to-br from-teal-50/50 to-white">
+          <div className="max-w-8xl mx-auto">
             {children}
           </div>
         </main>

@@ -1,20 +1,21 @@
 /* app/globals.css */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Nunito Sans', 'Inter', system-ui, -apple-system, sans-serif;
 
-  /* Primary Theme Colors */
-  --color-primary: #EA580C;
-  --color-primary-light: #FB923C;
-  --color-primary-dark: #C2410C;
-  --color-secondary: #1F2937;
-  --color-accent: #F97316;
-  --color-brand-accent: #F97316;
+  /* OSH Wellness Color Palette */
+  --color-primary: #16A085;
+  --color-primary-light: #1ABC9C;
+  --color-primary-dark: #138D75;
+  --color-secondary: #2C3E50;
+  --color-accent: #27AE60;
+  --color-brand-accent: #229954;
   
-  /* Modern Neutral Colors */
+  /* Modern Neutral Colors - Enhanced */
   --color-gray-50: #F8FAFC;
   --color-gray-100: #F1F5F9;
   --color-gray-200: #E2E8F0;
@@ -32,11 +33,19 @@
   --color-muted: #64748B;
   --color-muted-light: #94A3B8;
   
-  /* Status Colors */
+  /* Status Colors - Modern */
   --color-success: #10B981;
-  --color-warning: #F97316;
+  --color-warning: #F59E0B;
   --color-error: #EF4444;
-  --color-info: #EA580C;
+  --color-info: #3B82F6;
+  
+  /* OSH Wellness Specific Colors */
+  --color-wellness-primary: #16A085;
+  --color-wellness-secondary: #27AE60;
+  --color-wellness-accent: #F39C12;
+  --color-wellness-neutral: #7F8C8D;
+  --color-wellness-light: #ECF0F1;
+  --color-wellness-dark: #2C3E50;
   
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -75,58 +84,100 @@
 .bg-gradient-primary-light { background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary)); }
 .bg-gradient-accent { background: linear-gradient(135deg, var(--color-accent), var(--color-primary)); }
 
-/* Admin panel specific utilities */
+/* Modern Admin Panel Utilities - OSH Wellness Inspired */
 .admin-card { 
   background: white;
-  border-radius: 1rem;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  transition: all 0.3s ease;
+  border-radius: 1.5rem;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px 0 rgb(0 0 0 / 0.06);
+  border: 1px solid rgb(241 245 249);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .admin-card:hover {
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+  transform: translateY(-4px);
+  border-color: rgb(226 232 240);
 }
 
 .admin-nav-active {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  background: linear-gradient(135deg, var(--color-wellness-primary), var(--color-primary-dark));
   color: white;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  box-shadow: 0 4px 6px -1px rgb(22 160 133 / 0.2);
+  border-radius: 1rem;
 }
 
 .admin-nav-inactive {
-  color: var(--color-gray-700);
-  transition: all 0.2s ease;
+  color: var(--color-gray-600);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 1rem;
 }
 .admin-nav-inactive:hover {
-  background-color: var(--color-gray-100);
-  color: var(--color-gray-900);
+  background-color: var(--color-gray-50);
+  color: var(--color-wellness-primary);
 }
 
 .admin-button-primary {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  background: linear-gradient(135deg, var(--color-wellness-primary), var(--color-primary-dark));
   color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.75rem;
+  padding: 0.875rem 2rem;
+  border-radius: 1rem;
   font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  font-size: 0.875rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgb(22 160 133 / 0.2);
+  border: none;
 }
 .admin-button-primary:hover {
   opacity: 0.9;
-  transform: translateY(-1px);
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgb(22 160 133 / 0.3);
 }
 
 .admin-stat-card {
   background: white;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  transition: all 0.3s ease;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  border: 1px solid rgb(241 245 249);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .admin-stat-card:hover {
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+  border-color: var(--color-wellness-primary);
+}
+
+/* Modern Wellness-Inspired Components */
+.wellness-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  border: 1px solid rgb(241 245 249);
+  transition: all 0.3s ease;
+}
+
+.wellness-button {
+  background: linear-gradient(135deg, var(--color-wellness-secondary), var(--color-accent));
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgb(39 174 96 / 0.2);
+}
+
+.modern-input {
+  border: 2px solid rgb(241 245 249);
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+.modern-input:focus {
+  border-color: var(--color-wellness-primary);
+  box-shadow: 0 0 0 3px rgb(22 160 133 / 0.1);
+  outline: none;
 }
 
 * {
@@ -146,20 +197,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Enhanced scrollbar */
+/* Modern Enhanced Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-light-gray);
+  background: var(--color-gray-100);
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-brand-green);
-  border-radius: 3px;
+  background: linear-gradient(135deg, var(--color-wellness-primary), var(--color-primary-dark));
+  border-radius: 4px;
+  border: 2px solid var(--color-gray-100);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-brand-green-dark);
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-wellness-primary));
 }
 
 /* Text utilities */

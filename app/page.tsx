@@ -1,8 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-import SalesHomepage from "./components/SalesHomepage";
-import ProductShowcase from "./components/ProductShowcase";
+import ModernHomepage from "./components/ModernHomepage";
 import TestimonialsSection from "./components/TestimonialsSection";
 import ContactCTASection from "./components/ContactCTASection";
 import MediaSlider from "./components/MediaSlider";
@@ -52,25 +51,19 @@ export default async function HomePage() {
 
   return (
     <div className="bg-white">
-      <SalesHomepage featuredProducts={featuredProducts} settings={settings} />
+      <ModernHomepage featuredProducts={featuredProducts} settings={settings} />
       
-      <ProductShowcase 
-        products={featuredProducts} 
-        title="Featured Machinery"
-        subtitle="Explore our premium stone processing equipment designed for maximum efficiency and ROI"
-      />
-      
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <span className="inline-block bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
-              Factory Tour
-            </span>
-            <h2 className="text-3xl font-bold mb-4 text-gray-900">
-              Manufacturing Excellence
+      <section className="py-20 bg-gradient-to-br from-slate-50 to-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center bg-blue-100 text-blue-700 px-6 py-3 rounded-full text-sm font-semibold mb-6">
+              🏭 Factory Tour
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-slate-900">
+              Manufacturing <span className="text-blue-600">Excellence</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              See our precision manufacturing process in action
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              See our precision manufacturing process in action and witness the quality that sets us apart
             </p>
           </div>
           <MediaSlider />

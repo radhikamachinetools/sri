@@ -20,6 +20,7 @@ type MediaItem = {
 export default function MediaAdmin() {
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [toast, setToast] = useState<{message: string, type: 'success' | 'error'} | null>(null);
   const [deleteModal, setDeleteModal] = useState<{show: boolean, mediaId: string, mediaTitle: string}>({show: false, mediaId: '', mediaTitle: ''});
@@ -33,8 +34,11 @@ export default function MediaAdmin() {
       const res = await fetch('/api/media');
       const data = await res.json();
       setMedia(data.success ? data.media : []);
-    } catch {
-      console.error('Error fetching media');
+    } catch (error) {
+      console.error('Error fetching media:', error);
+      setError('Failed to load media files. Please try again.');
+      setToast({ message: 'Failed to load media files', type: 'error' });
+      setTimeout(() => setToast(null), 3000);
     } finally {
       setLoading(false);
     }
@@ -74,6 +78,23 @@ export default function MediaAdmin() {
               <div key={i} className="aspect-square bg-gray-200 rounded-lg"></div>
             ))}
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full">
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <h3 className="text-lg font-semibold text-red-800 mb-2">Error Loading Media</h3>
+          <p className="text-red-600 mb-4">{error}</p>
+          <button 
+            onClick={() => { setError(null); fetchMedia(); }}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+          >
+            Try Again
+          </button>
         </div>
       </div>
     );

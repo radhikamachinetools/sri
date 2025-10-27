@@ -7,6 +7,7 @@ import { ArrowLeft } from "lucide-react";
 export default function CreateMedia() {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -19,6 +20,7 @@ export default function CreateMedia() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
+    setError(null);
 
     try {
       let mediaUrl = '';
@@ -67,6 +69,31 @@ export default function CreateMedia() {
       }
     } catch (error) {
       console.error('Error creating media:', error);
+      
+      let errorMessage = 'Failed to create media. Please try again.';
+      
+      if (error instanceof Error) {
+        if (error.message.includes('fetch')) {
+          errorMessage = 'Network error. Please check your connection and try again.';
+        } else if (error.message.includes('upload')) {
+          errorMessage = 'File upload failed. Please try a smaller file or different format.';
+        } else {
+          errorMessage = `Error: ${error.message}`;
+        }
+      }
+      
+      setError(errorMessage);
+      
+      // Show error toast
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 p-4 rounded-lg shadow-lg bg-red-500 text-white';
+      toast.textContent = `✗ ${errorMessage}`;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        if (document.body.contains(toast)) {
+          document.body.removeChild(toast);
+        }
+      }, 5000);
     } finally {
       setSaving(false);
     }
@@ -86,6 +113,20 @@ export default function CreateMedia() {
           <p className="text-gray-600 mt-1">Create new media content</p>
         </div>
       </div>
+
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl mb-6">
+          <div className="flex items-center justify-between">
+            <span>{error}</span>
+            <button
+              onClick={() => setError(null)}
+              className="text-red-400 hover:text-red-600"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="p-8 space-y-6">

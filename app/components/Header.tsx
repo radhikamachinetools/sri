@@ -29,71 +29,74 @@ const Header = () => {
 
   return (
     <>
-      {/* Top Contact Bar */}
-      <div className="bg-orange-600 text-white py-2 hidden lg:block">
+      {/* OSH Wellness Style Top Contact Bar */}
+      <div className="bg-gradient-to-r from-teal-600 to-teal-700 text-white py-3 hidden lg:block">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center text-sm">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <Phone size={14} />
-                <span>+91 9983813366, +91 9950329353</span>
+            <div className="flex items-center space-x-8">
+              <div className="flex items-center space-x-3">
+                <Phone size={16} className="text-teal-200" />
+                <span className="font-medium">+91 9983813366, +91 9950329353</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <Mail size={14} />
-                <span>shreeradheyindustriesjodhpur@gmail.com</span>
+              <div className="flex items-center space-x-3">
+                <Mail size={16} className="text-teal-200" />
+                <span className="font-medium">shreeradheyindustriesjodhpur@gmail.com</span>
               </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <MapPin size={14} />
-              <span>Jodhpur, Rajasthan, India</span>
+            <div className="flex items-center space-x-3">
+              <MapPin size={16} className="text-teal-200" />
+              <span className="font-medium">Jodhpur, Rajasthan, India</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Header */}
-      <header className="bg-white shadow-md sticky top-0 z-50">
+      {/* Modern Main Header */}
+      <header className="bg-white/95 backdrop-blur-md shadow-lg border-b border-slate-200/60 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
+          <div className="flex items-center justify-between h-24">
+            {/* Modern Logo */}
             <Link href="/" className="flex items-center space-x-4">
-              <Image
-                src="/images/radhika-logo.png"
-                alt="Shree Radhey Industries"
-                width={60}
-                height={60}
-                className="rounded-full"
-              />
+              <div className="relative">
+                <Image
+                  src="/images/radhika-logo.png"
+                  alt="Shree Radhey Industries"
+                  width={64}
+                  height={64}
+                  className="rounded-2xl shadow-lg"
+                />
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+              </div>
               <div className="hidden sm:block">
-                <h1 className="text-2xl font-bold text-gray-900">
+                <h1 className="text-2xl font-bold text-slate-900">
                   Shree Radhey Industries
                 </h1>
-                <p className="text-sm text-orange-600 font-medium">
+                <p className="text-sm text-teal-600 font-semibold">
                   Engineering Excellence Since 1995
                 </p>
               </div>
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
+            {/* OSH Wellness Style Navigation */}
+            <nav className="hidden lg:flex items-center space-x-2">
               {navigation.map((item) => (
                 <div key={item.name} className="relative group">
                   <Link
                     href={item.href}
-                    className="flex items-center space-x-1 text-gray-700 hover:text-orange-600 font-semibold transition-colors py-2"
+                    className="flex items-center space-x-2 text-slate-700 hover:text-teal-600 font-semibold transition-all duration-300 px-4 py-3 rounded-xl hover:bg-teal-50"
                   >
                     <span>{item.name}</span>
                     {item.hasDropdown && <ChevronDown size={16} className="transition-transform group-hover:rotate-180" />}
                   </Link>
                   
                   {item.hasDropdown && (
-                    <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-xl border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                      <div className="py-2">
+                    <div className="absolute top-full left-0 mt-2 w-72 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-200/60 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+                      <div className="py-4">
                         {item.subItems?.map((subItem) => (
                           <Link
                             key={subItem.name}
                             href={subItem.href}
-                            className="block px-4 py-3 text-gray-600 hover:bg-orange-50 hover:text-orange-600 transition-colors text-sm"
+                            className="block px-6 py-4 text-slate-600 hover:bg-teal-50 hover:text-teal-600 transition-all duration-200 text-sm font-medium rounded-xl mx-2"
                           >
                             {subItem.name}
                           </Link>
@@ -105,11 +108,11 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* CTA Button */}
+            {/* OSH Wellness Style CTA Button */}
             <div className="hidden lg:block">
               <Link
                 href="/contact"
-                className="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors shadow-md"
+                className="bg-gradient-to-r from-teal-600 to-teal-700 text-white px-8 py-4 rounded-2xl font-bold hover:from-teal-700 hover:to-teal-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
                 Get Quote
               </Link>

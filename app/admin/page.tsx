@@ -12,6 +12,8 @@ export default function AdminDashboard() {
     completedContacts: 0,
     totalProducts: 5
   });
+  const [statsError, setStatsError] = useState<string | null>(null);
+  const [statsLoading, setStatsLoading] = useState(true);
 
   useEffect(() => {
     fetchStats();
@@ -19,6 +21,8 @@ export default function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
+      setStatsLoading(true);
+      setStatsError(null);
       const res = await fetch('/api/contact');
       const data = await res.json();
       if (data.success) {
@@ -29,9 +33,14 @@ export default function AdminDashboard() {
           completedContacts: contacts.filter((c: {status?: string}) => c.status === 'completed').length,
           totalProducts: 5
         });
+      } else {
+        setStatsError('Failed to load dashboard statistics');
       }
     } catch (error) {
       console.error('Error fetching stats:', error);
+      setStatsError('Unable to connect to server. Please check your connection.');
+    } finally {
+      setStatsLoading(false);
     }
   };
 
@@ -95,21 +104,38 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
+      {/* Modern Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex items-center justify-between"
+        className="flex items-center justify-between mb-12"
       >
         <div>
-          <h1 className="text-4xl font-black text-slate-900 mb-2">Dashboard</h1>
-          <p className="text-slate-600 text-lg">Welcome back! Here's what's happening with your business.</p>
+          <h1 className="text-5xl font-bold text-slate-900 mb-3 bg-gradient-to-r from-teal-600 to-teal-800 bg-clip-text text-transparent">Dashboard</h1>
+          <p className="text-slate-600 text-xl font-medium">Welcome back! Here's your business overview at a glance.</p>
         </div>
-        <div className="bg-gradient-to-r from-orange-100 to-red-100 text-primary px-6 py-3 rounded-full text-lg font-semibold">
-          🏭 Admin Panel
+        <div className="bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200 text-teal-700 px-8 py-4 rounded-2xl text-lg font-semibold shadow-sm">
+          🏭 Control Center
         </div>
       </motion.div>
+
+      {/* Stats Error Banner */}
+      {statsError && (
+        <div className="bg-red-50 border border-red-200 text-red-600 p-4 rounded-2xl mb-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <strong>Stats Error:</strong> {statsError}
+            </div>
+            <button
+              onClick={() => fetchStats()}
+              className="bg-red-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-700"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -123,42 +149,43 @@ export default function AdminDashboard() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="admin-stat-card"
             >
-              <div className="flex items-center justify-between mb-4">
-                <div className={`w-12 h-12 rounded-xl ${stat.color} flex items-center justify-center shadow-lg`}>
-                  <IconComponent className="h-6 w-6 text-white" />
+              <div className="flex items-center justify-between mb-6">
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-xl`}>
+                  <IconComponent className="h-8 w-8 text-white" />
                 </div>
-                <div className="flex items-center text-green-600">
+                <div className="flex items-center text-teal-600 bg-teal-50 px-3 py-1 rounded-full">
                   <TrendingUp className="h-4 w-4 mr-1" />
+                  <span className="text-xs font-semibold">+12%</span>
                 </div>
               </div>
-              <div className="space-y-2">
-                <h3 className="text-sm font-semibold text-slate-600 uppercase tracking-wide">
+              <div className="space-y-3">
+                <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">
                   {stat.title}
                 </h3>
-                <div className="text-3xl font-black text-slate-900">{stat.value}</div>
-                <p className="text-sm text-slate-500">{stat.change}</p>
+                <div className="text-4xl font-bold text-slate-900">{stat.value}</div>
+                <p className="text-sm text-slate-600 font-medium">{stat.change}</p>
               </div>
             </motion.div>
           );
         })}
       </div>
 
-      {/* Quick Actions */}
+      {/* Modern Quick Actions */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="admin-card p-8"
+        className="wellness-card mb-12"
       >
-        <h2 className="text-2xl font-bold text-slate-900 mb-6">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <h2 className="text-3xl font-bold text-slate-900 mb-8">Quick Actions</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {quickActions.map((action, index) => {
             const IconComponent = action.icon;
             return (
               <Link key={index} href={action.href}>
-                <div className={`bg-gradient-to-r ${action.color} hover:opacity-90 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-center`}>
-                  <IconComponent className="h-8 w-8 mx-auto mb-3" />
-                  <div className="font-semibold">{action.title}</div>
+                <div className={`bg-gradient-to-br ${action.color} hover:scale-105 text-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-center group`}>
+                  <IconComponent className="h-10 w-10 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                  <div className="font-bold text-lg">{action.title}</div>
                 </div>
               </Link>
             );
