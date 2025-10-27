@@ -19,6 +19,7 @@ export default function MediaSlider() {
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchActiveMedia();
@@ -35,6 +36,7 @@ export default function MediaSlider() {
 
   const fetchActiveMedia = async () => {
     try {
+      setError(null);
       const res = await fetch('/api/media');
       const data = await res.json();
       if (data.success) {
@@ -51,9 +53,12 @@ export default function MediaSlider() {
           return true;
         });
         setMedia(activeMedia);
+      } else {
+        setError('Failed to load media content');
       }
     } catch (error) {
       console.error('Error fetching media:', error);
+      setError('Unable to connect to server. Please check your connection.');
     } finally {
       setLoading(false);
     }
@@ -79,9 +84,29 @@ export default function MediaSlider() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="relative h-96 bg-red-50 border border-red-200 rounded-xl overflow-hidden flex items-center justify-center">
+        <div className="text-center p-6">
+          <div className="w-16 h-16 bg-red-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <span className="text-2xl text-red-600">⚠️</span>
+          </div>
+          <h3 className="text-xl font-bold mb-2 text-red-800">Error Loading Media</h3>
+          <p className="text-red-600 mb-4">{error}</p>
+          <button 
+            onClick={() => { setError(null); setLoading(true); fetchActiveMedia(); }}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (media.length === 0) {
     return (
-      <div className="relative h-96 bg-gradient-to-br from-brand-green-dark to-brand-green rounded-xl overflow-hidden flex items-center justify-center text-white">
+      <div className="relative h-96 bg-gradient-to-br from-teal-600 to-teal-700 rounded-xl overflow-hidden flex items-center justify-center text-white">
         <div className="text-center">
           <div className="w-16 h-16 bg-white/20 rounded-full mx-auto mb-4 flex items-center justify-center">
             <span className="text-2xl">🏭</span>

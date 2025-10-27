@@ -351,12 +351,19 @@ export default function SalesHomepage({ featuredProducts, settings }: SalesHomep
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-              <Link href={`tel:${contactInfo.phones[0]}`}>
-                <button className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+              {contactInfo?.phones?.[0] ? (
+                <Link href={`tel:${contactInfo.phones[0]}`}>
+                  <button className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    <Phone className="inline mr-2 h-5 w-5" />
+                    Call {contactInfo.phones[0]}
+                  </button>
+                </Link>
+              ) : (
+                <button className="bg-white text-primary px-8 py-3 rounded-lg font-semibold opacity-50 cursor-not-allowed">
                   <Phone className="inline mr-2 h-5 w-5" />
-                  Call {contactInfo.phones[0]}
+                  Phone Unavailable
                 </button>
-              </Link>
+              )}
               <Link href="/contact">
                 <button className="border border-white/30 text-white px-8 py-3 rounded-lg hover:bg-white/10 transition-colors">
                   Get Quote

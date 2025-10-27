@@ -3,6 +3,23 @@
 import { useState, useEffect } from "react";
 import { FileText, Mail, Calendar, User, MessageSquare, CheckCircle, Clock } from "lucide-react";
 
+// XSS Protection utility
+const sanitizeText = (text: string): string => {
+  if (!text) return '';
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;');
+};
+
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email) && !/<|>|script/i.test(email);
+};
+
 interface TermsQuestion {
   id: string;
   name: string;
@@ -17,6 +34,7 @@ interface TermsQuestion {
 export default function TermsQuestionsPage() {
   const [questions, setQuestions] = useState<TermsQuestion[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchQuestions();
@@ -24,13 +42,17 @@ export default function TermsQuestionsPage() {
 
   const fetchQuestions = async () => {
     try {
+      setError(null);
       const res = await fetch('/api/terms-questions');
       const data = await res.json();
       if (data.success) {
         setQuestions(data.questions.reverse()); // Show newest first
+      } else {
+        setError('Failed to load terms questions');
       }
     } catch (error) {
       console.error('Error fetching questions:', error);
+      setError('Unable to connect to server. Please check your connection.');
     } finally {
       setLoading(false);
     }
@@ -59,6 +81,24 @@ export default function TermsQuestionsPage() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-slate-600">Loading questions...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-8">
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <FileText className="h-16 w-16 text-red-400 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-red-800 mb-2">Error Loading Questions</h3>
+          <p className="text-red-600 mb-4">{error}</p>
+          <button 
+            onClick={() => { setError(null); setLoading(true); fetchQuestions(); }}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+          >
+            Try Again
+          </button>
         </div>
       </div>
     );
@@ -153,11 +193,13 @@ export default function TermsQuestionsPage() {
                       <User className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-900">{question.name}</h3>
+                      <h3 className="font-semibold text-slate-900">
+                        {sanitizeText(question.name)}
+                      </h3>
                       <div className="flex items-center text-sm text-slate-600 space-x-4">
                         <span className="flex items-center">
                           <Mail className="h-4 w-4 mr-1" />
-                          {question.email}
+                          {isValidEmail(question.email) ? question.email : 'Invalid Email'}
                         </span>
                         <span className="flex items-center">
                           <Calendar className="h-4 w-4 mr-1" />
@@ -176,20 +218,28 @@ export default function TermsQuestionsPage() {
                     </span>
                     {question.section && (
                       <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">
-                        {question.section}
+                        {sanitizeText(question.section)}
                       </span>
                     )}
                   </div>
                 </div>
                 
                 <div className="mb-4">
-                  <p className="text-slate-700 leading-relaxed">{question.question}</p>
+                  <p className="text-slate-700 leading-relaxed">
+                    {sanitizeText(question.question)}
+                  </p>
                 </div>
                 
                 <div className="flex items-center justify-between">
                   <div className="flex space-x-2">
                     <button
-                      onClick={() => window.location.href = `mailto:${question.email}`}
+                      onClick={() => {
+                        if (isValidEmail(question.email)) {
+                          window.location.href = `mailto:${encodeURIComponent(question.email)}`;
+                        } else {
+                          alert('Invalid email address');
+                        }
+                      }}
                       className="px-4 py-2 bg-primary text-white rounded-lg hover:opacity-90 transition-all text-sm font-semibold"
                     >
                       Reply via Email

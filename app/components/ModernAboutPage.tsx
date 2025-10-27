@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { useState } from 'react'
 import { 
   Award, Users, Factory, Target, Zap, Shield, 
   TrendingUp, Globe, Phone, Mail, MapPin, Star,
@@ -72,6 +73,33 @@ const team = [
 ]
 
 export default function ModernAboutPage() {
+  const [hasError, setHasError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const handleImageError = () => {
+    console.warn('About page image failed to load')
+  }
+
+  if (hasError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center p-8">
+          <div className="w-16 h-16 bg-red-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <span className="text-2xl text-red-600">⚠️</span>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Something went wrong</h2>
+          <p className="text-gray-600 mb-6">{errorMessage}</p>
+          <button 
+            onClick={() => { setHasError(false); setErrorMessage(''); }}
+            className="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -117,6 +145,7 @@ export default function ModernAboutPage() {
                   width={600}
                   height={400}
                   className="rounded-2xl shadow-2xl"
+                  onError={handleImageError}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl"></div>
               </div>

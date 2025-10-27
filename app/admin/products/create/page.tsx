@@ -23,13 +23,30 @@ export default function CreateProduct() {
   const [mainImageFile, setMainImageFile] = useState<File | null>(null);
   const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
     try {
+      // Validation
+      if (!product.name.trim()) {
+        setError('Product name is required');
+        return;
+      }
+      if (!mainImageFile && !product.imageUrl) {
+        setError('Main image is required');
+        return;
+      }
+      if (galleryFiles.length === 0 && product.images.length === 0) {
+        setError('At least one gallery image is required');
+        return;
+      }
+
       const slug = product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
       
       // Upload files first
@@ -45,29 +62,40 @@ export default function CreateProduct() {
           body: formData
         });
         
-        const uploadData = await uploadRes.json();
-        if (uploadData.success) {
-          const paths = uploadData.paths;
-          const updatedProduct = {
-            ...product,
-            slug,
-            imageUrl: mainImageFile ? paths[0] : product.imageUrl,
-            images: galleryFiles.length > 0 ? (mainImageFile ? paths.slice(1) : paths) : product.images
-          };
-          
-          const res = await fetch("/api/products", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedProduct),
-          });
-          
-          if (res.ok) {
-            router.push("/admin/products");
-          }
+        if (!uploadRes.ok) {
+          throw new Error('Failed to upload images');
         }
+        
+        const uploadData = await uploadRes.json();
+        if (!uploadData.success) {
+          throw new Error(uploadData.error || 'Image upload failed');
+        }
+        
+        const paths = uploadData.paths;
+        const updatedProduct = {
+          ...product,
+          slug,
+          imageUrl: mainImageFile ? paths[0] : product.imageUrl,
+          images: galleryFiles.length > 0 ? (mainImageFile ? paths.slice(1) : paths) : product.images
+        };
+        
+        const res = await fetch("/api/products", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedProduct),
+        });
+        
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.error || 'Failed to create product');
+        }
+        
+        setSuccess(true);
+        setTimeout(() => router.push("/admin/products"), 1500);
       }
     } catch (error) {
       console.error("Error creating product:", error);
+      setError(error instanceof Error ? error.message : 'An unexpected error occurred');
     } finally {
       setLoading(false);
     }
@@ -84,6 +112,21 @@ export default function CreateProduct() {
         </Link>
         <h1 className="text-3xl font-bold text-gray-900">Create New Product</h1>
       </div>
+
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl mb-6">
+          <div className="flex items-center justify-between">
+            <span><strong>Error:</strong> {error}</span>
+            <button onClick={() => setError(null)} className="text-red-400 hover:text-red-600">✕</button>
+          </div>
+        </div>
+      )}
+      
+      {success && (
+        <div className="bg-green-50 border border-green-200 text-green-600 p-4 rounded-xl mb-6">
+          <span><strong>Success:</strong> Product created successfully! Redirecting...</span>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl p-8 shadow-sm space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

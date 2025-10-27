@@ -30,6 +30,8 @@ export default function EditProduct() {
   const params = useParams();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [product, setProduct] = useState<Product>({
     name: "",
     slug: "",
@@ -62,6 +64,7 @@ export default function EditProduct() {
       }
     } catch (error) {
       console.error('Error fetching product:', error);
+      setError('Unable to connect to server. Please check your connection.');
     } finally {
       setLoading(false);
     }
@@ -90,6 +93,7 @@ export default function EditProduct() {
       }
     } catch (error) {
       console.error('Error updating product:', error);
+      setSaveError('Failed to update product. Please try again.');
     } finally {
       setSaving(false);
     }
@@ -159,6 +163,23 @@ export default function EditProduct() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="w-full max-w-4xl mx-auto">
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <h3 className="text-lg font-semibold text-red-800 mb-2">Error Loading Product</h3>
+          <p className="text-red-600 mb-4">{error}</p>
+          <button 
+            onClick={() => { setError(null); setLoading(true); fetchProduct(); }}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
@@ -174,6 +195,15 @@ export default function EditProduct() {
           <p className="text-gray-600 mt-1 text-sm sm:text-base">Update product information</p>
         </div>
       </div>
+
+      {saveError && (
+        <div className="bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl mb-6">
+          <div className="flex items-center justify-between">
+            <span><strong>Error:</strong> {saveError}</span>
+            <button onClick={() => setSaveError(null)} className="text-red-400 hover:text-red-600">✕</button>
+          </div>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8">

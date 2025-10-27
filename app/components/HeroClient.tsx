@@ -15,6 +15,7 @@ type HeroSettings = {
 
 export default function HeroClient() {
   const [settings, setSettings] = useState<HeroSettings | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch('/api/admin/settings')
@@ -24,7 +25,10 @@ export default function HeroClient() {
           setSettings(data.settings.hero);
         }
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error('Failed to load hero settings:', error);
+        setError('Failed to load content settings');
+        
         // Fallback content
         setSettings({
           title: "Engineering Excellence in Stone Processing",
@@ -40,10 +44,25 @@ export default function HeroClient() {
       });
   }, []);
 
-  if (!settings) return <div className="h-screen flex items-center justify-center"><div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div></div>;
+  if (!settings) return (
+    <div className="h-screen flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
+        <p className="text-white">Loading hero content...</p>
+        {error && (
+          <p className="text-red-300 text-sm mt-2">{error}</p>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <div className="relative z-10 text-center px-6 max-w-7xl mx-auto">
+      {error && (
+        <div className="bg-yellow-500/20 border border-yellow-500/30 text-yellow-200 p-3 rounded-lg mb-6 text-sm">
+          <span className="font-semibold">Notice:</span> Using fallback content due to loading error
+        </div>
+      )}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}

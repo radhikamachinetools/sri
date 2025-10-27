@@ -58,14 +58,26 @@ export default function ProductShowcase({ products, title = "Premium Machinery",
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          {products.slice(0, 4).map((product, index) => (
-            <motion.div
-              key={product._id}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.2, duration: 0.8 }}
-            >
+          {products.slice(0, 4).map((product, index) => {
+            // Validate product data
+            if (!product || !product._id || !product.name) {
+              console.warn('Invalid product data:', product);
+              return (
+                <div key={index} className="bg-gray-100 rounded-lg p-8 text-center">
+                  <div className="text-gray-500">Product unavailable</div>
+                </div>
+              );
+            }
+
+            try {
+              return (
+                <motion.div
+                  key={product._id}
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.2, duration: 0.8 }}
+                >
               <Card className="group hover:shadow-3xl transition-all duration-700 border-0 bg-white/90 backdrop-blur-sm overflow-hidden h-full">
                 <CardContent className="p-0">
                   <div className="lg:flex h-full">
@@ -100,7 +112,7 @@ export default function ProductShowcase({ products, title = "Premium Machinery",
                       {/* Category Badge */}
                       <div className="absolute top-4 left-4">
                         <Badge className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg">
-                          {product.category}
+                          {product.category || 'Uncategorized'}
                         </Badge>
                       </div>
 
@@ -117,10 +129,10 @@ export default function ProductShowcase({ products, title = "Premium Machinery",
                     <div className="lg:w-1/2 p-8 flex flex-col justify-between">
                       <div>
                         <h3 className="text-3xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">
-                          {product.name}
+                          {product.name || 'Unnamed Product'}
                         </h3>
                         <p className="text-slate-600 mb-6 text-lg leading-relaxed">
-                          {product.shortDescription}
+                          {product.shortDescription || 'No description available'}
                         </p>
                         
                         {/* Key Features */}
@@ -147,7 +159,7 @@ export default function ProductShowcase({ products, title = "Premium Machinery",
                       {/* Action Buttons */}
                       <div className="space-y-4">
                         <div className="flex gap-4">
-                          <Link href={`/products/${product.slug}`} className="flex-1">
+                          <Link href={`/products/${product.slug || product._id}`} className="flex-1">
                             <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg py-3">
                               View Details
                               <ArrowRight className="ml-2 h-5 w-5" />
@@ -172,8 +184,17 @@ export default function ProductShowcase({ products, title = "Premium Machinery",
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
-          ))}
+                </motion.div>
+              );
+            } catch (error) {
+              console.error('Error rendering product:', error, product);
+              return (
+                <div key={product._id || index} className="bg-red-50 border border-red-200 rounded-lg p-8 text-center">
+                  <div className="text-red-600">Failed to load product</div>
+                </div>
+              );
+            }
+          })}
         </div>
 
         {/* Additional Products Grid */}

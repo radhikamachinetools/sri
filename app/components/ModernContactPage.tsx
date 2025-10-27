@@ -83,11 +83,55 @@ export default function ModernContactPage() {
     message: '',
     machineType: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log('Form submitted:', formData)
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+    setErrorMessage('')
+
+    try {
+      // Validation
+      if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim()) {
+        throw new Error('Please fill in all required fields')
+      }
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+
+      const result = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send message')
+      }
+
+      if (result.success) {
+        setSubmitStatus('success')
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          subject: '',
+          message: '',
+          machineType: ''
+        })
+      } else {
+        throw new Error(result.error || 'Failed to send message')
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setSubmitStatus('error')
+      setErrorMessage(error instanceof Error ? error.message : 'An unexpected error occurred')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -182,6 +226,24 @@ export default function ModernContactPage() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
                   Send Us a Message
                 </h2>
+                
+                {submitStatus === 'success' && (
+                  <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-lg mb-6">
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 mr-2" />
+                      <span className="font-semibold">Message sent successfully! We'll contact you soon.</span>
+                    </div>
+                  </div>
+                )}
+                
+                {submitStatus === 'error' && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg mb-6">
+                    <div className="flex items-center justify-between">
+                      <span className="font-semibold">Error: {errorMessage}</span>
+                      <button onClick={() => setSubmitStatus('idle')} className="text-red-500 hover:text-red-700">✕</button>
+                    </div>
+                  </div>
+                )}
                   
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

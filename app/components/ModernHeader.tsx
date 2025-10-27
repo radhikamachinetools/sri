@@ -11,11 +11,29 @@ export default function ModernHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
+    // Check if window is available (client-side)
+    if (typeof window === 'undefined') return;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      try {
+        setIsScrolled(window.scrollY > 20);
+      } catch (error) {
+        console.error('Error handling scroll event:', error);
+      }
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    try {
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        try {
+          window.removeEventListener("scroll", handleScroll);
+        } catch (error) {
+          console.error('Error removing scroll listener:', error);
+        }
+      };
+    } catch (error) {
+      console.error('Error adding scroll listener:', error);
+    }
   }, []);
 
   const navigation = [

@@ -112,7 +112,15 @@ export default function NewHomepage({ featuredProducts }: NewHomepageProps) {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProducts.slice(0, 6).map((product, index) => (
+            {featuredProducts.slice(0, 6).map((product, index) => {
+              if (!product || !product._id) {
+                return (
+                  <div key={index} className="bg-gray-100 rounded-lg p-6 text-center">
+                    <div className="text-gray-500">Product unavailable</div>
+                  </div>
+                );
+              }
+              return (
               <motion.div
                 key={product._id}
                 initial={{ opacity: 0, y: 20 }}
@@ -126,7 +134,7 @@ export default function NewHomepage({ featuredProducts }: NewHomepageProps) {
                       {product.imageUrl ? (
                         <Image
                           src={product.imageUrl}
-                          alt={product.name}
+                          alt={product.name || 'Product image'}
                           width={400}
                           height={300}
                           className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
@@ -145,10 +153,10 @@ export default function NewHomepage({ featuredProducts }: NewHomepageProps) {
                     
                     <div className="p-6">
                       <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
-                        {product.name}
+                        {product.name || 'Unnamed Product'}
                       </h3>
                       <p className="text-slate-600 mb-4 line-clamp-2">
-                        {product.shortDescription}
+                        {product.shortDescription || 'No description available'}
                       </p>
                       
                       <div className="flex justify-between items-center">
