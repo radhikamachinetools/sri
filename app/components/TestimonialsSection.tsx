@@ -14,7 +14,7 @@ const testimonials = [
     location: "Jaipur, Rajasthan",
     rating: 5,
     text: "Shree Radhey Industries transformed our production line. The C-2300 Block Cutter increased our efficiency by 45% and the quality is outstanding. Best investment we've made!",
-    image: "/api/placeholder/80/80",
+    image: "/images/conventional-5-blade.png",
     industry: "Granite Processing"
   },
   {
@@ -24,7 +24,7 @@ const testimonials = [
     location: "Udaipur, Rajasthan",
     rating: 5,
     text: "The LPM Disk Polishing Machine delivers mirror-like finishes consistently. Their after-sales support is exceptional - truly a reliable partner for our business.",
-    image: "/api/placeholder/80/80",
+    image: "/images/single-blade-cutter-image.webp",
     industry: "Marble Finishing"
   },
   {
@@ -34,7 +34,7 @@ const testimonials = [
     location: "Jodhpur, Rajasthan",
     rating: 5,
     text: "Working with Shree Radhey Industries for 3 years now. Their machines are built to last and the ROI is incredible. Highly recommend for serious stone processors.",
-    image: "/api/placeholder/80/80",
+    image: "/images/sdp-img-2.png",
     industry: "Stone Processing"
   },
   {
@@ -44,7 +44,7 @@ const testimonials = [
     location: "Kota, Rajasthan",
     rating: 5,
     text: "The precision and reliability of their wire saw machine is unmatched. Cut our processing time in half while maintaining superior quality standards.",
-    image: "/api/placeholder/80/80",
+    image: "/images/about-us-bg.png",
     industry: "Stone Cutting"
   }
 ]
