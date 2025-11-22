@@ -1,0 +1,378 @@
+'use client'
+
+import { motion } from 'framer-motion'
+import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+import { 
+  Award, Users, Factory, Target, Zap, Shield, 
+  TrendingUp, Globe, Phone, Mail, MapPin, Star,
+  CheckCircle, ArrowRight, Calendar, Building
+} from 'lucide-react'
+import Image from 'next/image'
+import { IMAGES } from '../lib/images'
+
+const milestones = [
+  { year: "1998", title: "Company Founded", description: "Started with a vision to revolutionize stone processing" },
+  { year: "2005", title: "First Major Contract", description: "Secured contract with leading granite processing company" },
+  { year: "2010", title: "ISO Certification", description: "Achieved ISO 9001:2008 certification for quality management" },
+  { year: "2015", title: "500+ Clients", description: "Reached milestone of serving 500+ satisfied customers" },
+  { year: "2020", title: "Technology Upgrade", description: "Introduced AI-powered precision control systems" },
+  { year: "2024", title: "Market Leader", description: "Established as leading stone machinery manufacturer in India" }
+]
+
+const values = [
+  {
+    icon: <Award className="h-12 w-12 text-primary" />,
+    title: "Excellence",
+    description: "We strive for perfection in every machine we manufacture, ensuring the highest quality standards."
+  },
+  {
+    icon: <Users className="h-12 w-12 text-primary" />,
+    title: "Customer First",
+    description: "Our customers' success is our priority. We provide comprehensive support and customized solutions."
+  },
+  {
+    icon: <Zap className="h-12 w-12 text-primary" />,
+    title: "Innovation",
+    description: "Continuous research and development to bring cutting-edge technology to stone processing."
+  },
+  {
+    icon: <Shield className="h-12 w-12 text-primary" />,
+    title: "Reliability",
+    description: "Built to last with premium materials and rigorous testing for maximum durability."
+  }
+]
+
+const stats = [
+  { number: "25+", label: "Years Experience", icon: <Calendar className="h-8 w-8" /> },
+  { number: "500+", label: "Happy Clients", icon: <Users className="h-8 w-8" /> },
+  { number: "50+", label: "Machine Models", icon: <Factory className="h-8 w-8" /> },
+  { number: "99.9%", label: "Uptime Rate", icon: <TrendingUp className="h-8 w-8" /> }
+]
+
+const team = [
+  {
+    name: "Rajesh Kumar",
+    position: "Founder & CEO",
+    description: "25+ years of experience in stone processing machinery manufacturing",
+    image: "/api/placeholder/300/300"
+  },
+  {
+    name: "Suresh Patel",
+    position: "Technical Director",
+    description: "Expert in mechanical engineering and automation systems",
+    image: "/api/placeholder/300/300"
+  },
+  {
+    name: "Amit Sharma",
+    position: "Sales Director",
+    description: "Specialist in customer relations and business development",
+    image: "/api/placeholder/300/300"
+  }
+]
+
+export default function ModernAboutPage() {
+  const [hasError, setHasError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const handleImageError = () => {
+    console.warn('About page image failed to load')
+  }
+
+  if (hasError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-secondary">
+        <div className="text-center p-8">
+          <div className="w-16 h-16 bg-red-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <span className="text-2xl text-red-600">!</span>
+          </div>
+          <h2 className="text-2xl font-bold text-brand-accent mb-4">Something went wrong</h2>
+          <p className="text-muted mb-6">{errorMessage}</p>
+          <button 
+            onClick={() => { setHasError(false); setErrorMessage(''); }}
+            className="bg-primary text-secondary px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="py-24 bg-gradient-to-r from-primary to-primary-dark text-secondary relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/20"></div>
+        
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <h1 className="text-4xl md:text-6xl font-bold mb-8 leading-tight text-brand-accent">
+                Crafting Excellence
+                <br />
+                <span className="text-brand-accent/80">Since 1998</span>
+              </h1>
+              
+              <p className="text-lg md:text-xl mb-8 text-brand-accent/80 leading-relaxed">
+                For over 25 years, we've been at the forefront of stone processing technology, 
+                delivering innovative machinery solutions that transform businesses across India.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button className="bg-secondary text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
+                  <Phone className="inline mr-2 h-5 w-5" />
+                  Contact Us
+                </button>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+              className="relative"
+            >
+              <div className="relative">
+                <Image
+                  src={IMAGES.aboutBackground}
+                  alt="Shree Radhey Industries Factory"
+                  width={600}
+                  height={400}
+                  className="rounded-2xl shadow-2xl"
+                  onError={handleImageError}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl"></div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-16 bg-secondary">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.6, ease: "easeOut" }}
+                className="text-center"
+              >
+                <div className="bg-gradient-to-br from-secondary to-primary/10 p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2 border border-primary/20">
+                  <div className="p-2">
+                    <div className="text-primary mb-4 flex justify-center">
+                      {stat.icon}
+                    </div>
+                    <div className="text-2xl font-bold text-brand-accent mb-1">
+                      {stat.number}
+                    </div>
+                    <div className="text-muted font-medium text-sm">
+                      {stat.label}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Our Story Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-brand-accent mb-4">
+              Our Journey
+            </h2>
+            <p className="text-lg text-muted max-w-2xl mx-auto">
+              From a small workshop to India's leading stone machinery manufacturer
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {milestones.map((milestone, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
+                className="bg-gradient-to-br from-secondary to-primary/10 p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-primary/20"
+              >
+                <div className="text-2xl font-bold text-primary mb-2">
+                  {milestone.year}
+                </div>
+                <h3 className="text-lg font-semibold text-brand-accent mb-2">
+                  {milestone.title}
+                </h3>
+                <p className="text-muted text-sm">
+                  {milestone.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="py-16 bg-secondary">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-brand-accent mb-4">
+              Our Values
+            </h2>
+            <p className="text-lg text-muted">
+              The principles that guide everything we do
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {values.map((value, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
+              >
+                <div className="bg-gradient-to-br from-secondary to-primary/10 p-6 rounded-xl text-center h-full shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2 border border-primary/20">
+                  <div className="mb-4 flex justify-center">
+                    {value.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-brand-accent mb-3">
+                    {value.title}
+                  </h3>
+                  <p className="text-muted">
+                    {value.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section className="py-16 bg-gradient-to-br from-primary/10 to-secondary">
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-brand-accent mb-4">
+              Meet Our <span className="text-primary">Leadership</span>
+            </h2>
+            <p className="text-lg text-muted">
+              The experienced team driving innovation in stone processing technology
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {team.map((member, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.2, duration: 0.6, ease: "easeOut" }}
+              >
+                <div className="bg-gradient-to-br from-secondary to-primary/10 p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-3 hover:rotate-1 border border-primary/20 group">
+                  <div className="text-center">
+                    <div className="w-24 h-24 bg-gradient-to-r from-primary to-primary-dark rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <span className="text-secondary font-bold text-2xl">
+                        {member.name.charAt(0)}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-bold text-brand-accent mb-2">
+                      {member.name}
+                    </h3>
+                    <div className="text-primary font-semibold mb-3 text-sm">
+                      {member.position}
+                    </div>
+                    <p className="text-muted text-sm leading-relaxed">
+                      {member.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-gradient-to-r from-primary to-primary-dark text-secondary relative overflow-hidden">
+        <div className="absolute inset-0 bg-brand-accent/10"></div>
+        <div className="relative max-w-4xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-brand-accent">
+              Ready to <span className="text-brand-accent/80">Partner</span> With Us?
+            </h2>
+            <p className="text-lg mb-8 text-brand-accent/80">
+              Join hundreds of satisfied customers who trust our expertise and quality
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+              <motion.div
+                whileHover={{ scale: 1.05, rotate: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <button className="bg-secondary text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-300 shadow-lg">
+                  <Phone className="inline mr-2 h-5 w-5" />
+                  Get in Touch
+                </button>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05, rotate: -1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <button className="border border-secondary/30 text-brand-accent px-8 py-3 rounded-lg hover:bg-secondary/10 transition-all duration-300">
+                  <Building className="inline mr-2 h-5 w-5" />
+                  Visit Our Factory
+                </button>
+              </motion.div>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-brand-accent/80">
+              {[
+                { text: "25+ Years Experience" },
+                { text: "ISO Certified Quality" },
+                { text: "24/7 Support" }
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.2, duration: 0.5 }}
+                  className="flex items-center justify-center"
+                >
+                  <CheckCircle className="h-5 w-5 mr-2 text-brand-accent/80" />
+                  <span className="text-sm">{item.text}</span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  )
+}
