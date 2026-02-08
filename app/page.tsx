@@ -159,7 +159,7 @@ export default async function HomePage() {
           <div className="relative h-64 lg:h-96 bg-gray-900 overflow-hidden">
             <Image
               src="/images/wallpaper1.jpeg"
-              alt="Radhika Machine Tools Factory"
+              alt="Shree Radhey Industries Factory"
               fill
               className="object-cover"
             />
@@ -201,7 +201,7 @@ export default async function HomePage() {
         <div className="container mx-auto px-3 sm:px-6 lg:px-8">
           <div className="text-center mb-6 lg:mb-16">
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold mb-2 lg:mb-4 text-brand-green-dark">
-              Why Radhika Machine Tools?
+              Why Shree Radhey Industries?
             </h2>
             <p className="text-base lg:text-lg text-muted max-w-3xl mx-auto">
               We combine decades of expertise with cutting-edge technology to deliver unmatched quality
@@ -267,7 +267,7 @@ export default async function HomePage() {
               Ready to Transform Your Production?
             </h2>
             <p className="text-xl text-green-100 max-w-3xl mx-auto">
-              Let&apos;s discuss how Radhika Machine Tools can help you achieve your production goals.
+              Let&apos;s discuss how Shree Radhey Industries can help you achieve your production goals.
               Get in touch with our experts today.
             </p>
           </div>

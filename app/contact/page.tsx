@@ -302,7 +302,7 @@ export default function ContactPage() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Radhika Machine Tools Location"
+              title="Shree Radhey Industries Location"
             ></iframe>
           </div>
         </div>

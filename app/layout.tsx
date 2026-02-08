@@ -7,8 +7,8 @@ import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "Radhika Machine Tools - Premium Stone Processing Machinery",
-    template: "%s | Radhika Machine Tools"
+    default: "Shree Radhey Industries - Premium Stone Processing Machinery",
+    template: "%s | Shree Radhey Industries"
   },
   description: "Leading manufacturer of stone processing machinery including granite cutting machines, line polishing machines, handling cranes, and epoxy resin lines. Trusted by 500+ industries worldwide.",
   keywords: [
@@ -20,11 +20,11 @@ export const metadata: Metadata = {
     "stone machinery manufacturer",
     "industrial machinery",
     "Jodhpur machinery",
-    "Radhika Machine Tools"
+    "Shree Radhey Industries"
   ],
-  authors: [{ name: "Radhika Machine Tools" }],
-  creator: "Radhika Machine Tools",
-  publisher: "Radhika Machine Tools",
+  authors: [{ name: "Shree Radhey Industries" }],
+  creator: "Shree Radhey Industries",
+  publisher: "Shree Radhey Industries",
   formatDetection: {
     email: false,
     address: false,
@@ -38,21 +38,21 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    title: 'Radhika Machine Tools - Premium Stone Processing Machinery',
+    title: 'Shree Radhey Industries - Premium Stone Processing Machinery',
     description: 'Leading manufacturer of stone processing machinery. Trusted by 500+ industries worldwide.',
-    siteName: 'Radhika Machine Tools',
+    siteName: 'Shree Radhey Industries',
     images: [
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Radhika Machine Tools - Stone Processing Machinery',
+        alt: 'Shree Radhey Industries - Stone Processing Machinery',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Radhika Machine Tools - Premium Stone Processing Machinery',
+    title: 'Shree Radhey Industries - Premium Stone Processing Machinery',
     description: 'Leading manufacturer of stone processing machinery. Trusted by 500+ industries worldwide.',
     images: ['/images/og-image.jpg'],
   },
@@ -78,8 +78,8 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#059669' },
-    { media: '(prefers-color-scheme: dark)', color: '#047857' },
+    { media: '(prefers-color-scheme: light)', color: '#d3446b' },
+    { media: '(prefers-color-scheme: dark)', color: '#a73454' },
   ],
 };
 
@@ -91,17 +91,17 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <link rel="icon" href="/images/radhika-logo.png" sizes="any" />
-        <link rel="icon" href="/images/radhika-logo.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/images/radhika-logo.png" />
+        <link rel="icon" href="/favicon.png" sizes="any" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="RMT" />
-        <meta name="application-name" content="Radhika Machine Tools" />
-        <meta name="msapplication-TileColor" content="#059669" />
-        <meta name="theme-color" content="#059669" />
+        <meta name="apple-mobile-web-app-title" content="SRI" />
+        <meta name="application-name" content="Shree Radhey Industries" />
+        <meta name="msapplication-TileColor" content="#d3446b" />
+        <meta name="theme-color" content="#d3446b" />
       </head>
       <body className="antialiased">
         <div className="flex flex-col min-h-screen">
@@ -117,7 +117,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "Radhika Machine Tools",
+              "name": "Shree Radhey Industries",
               "url": process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
               "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/images/radhika-logo.png`,
               "description": "Leading manufacturer of stone processing machinery including granite cutting machines, line polishing machines, handling cranes, and epoxy resin lines.",

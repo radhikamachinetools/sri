@@ -92,7 +92,7 @@ const Header = () => {
                 <div className="relative">
                   <Image
                     src="/images/radhika-logo.png"
-                    alt="Radhika Machine Tools Logo"
+                    alt="Shree Radhey Industries Logo"
                     width={45}
                     height={45}
                     className="lg:w-[55px] lg:h-[55px] rounded-full ring-2 ring-white/20"
@@ -103,7 +103,7 @@ const Header = () => {
                   shouldShowText ? 'opacity-100 max-w-none' : 'opacity-0 max-w-0 overflow-hidden'
                 }`}>
                   <span className="text-xl lg:text-2xl font-bold text-white">
-                    Radhika Machine Tools
+                    Shree Radhey Industries
                   </span>
                   <p className="text-xs text-pink-100 -mt-1">
                     Engineering Excellence

@@ -17,7 +17,7 @@ const Footer = () => {
               <div className="relative">
                 <Image
                   src="/images/radhika-logo.png"
-                  alt="Radhika Machine Tools Logo"
+                  alt="Shree Radhey Industries Logo"
                   width={50}
                   height={50}
                   className="rounded-full ring-2 ring-white/20"
@@ -25,7 +25,7 @@ const Footer = () => {
               </div>
               <div>
                 <span className="text-xl font-bold text-white block">
-                  Radhika Machine Tools
+                  Shree Radhey Industries
                 </span>
                 <span className="text-xs text-pink-100">
                   Engineering Excellence
@@ -206,7 +206,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-white/20">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
             <p className="text-pink-100 text-center lg:text-left">
-              &copy; {new Date().getFullYear()} Radhika Machine Tools. All Rights Reserved.
+              &copy; {new Date().getFullYear()} Shree Radhey Industries. All Rights Reserved.
             </p>
             <div className="flex items-center gap-6 text-sm text-pink-100">
               <Link href="/privacy-policy" className="hover:text-white transition-colors">
