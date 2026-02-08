@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "_id": "177037510175732mz7c61v",
+      "type": "video",
+      "url": "/uploads/infrastructure/1770375100552-infrastructure.mp4",
+      "title": "infrastructure",
+      "description": "",
+      "order": 3
+    },
+    {
+      "_id": "1770375923905xdo2xku9h",
+      "type": "image",
+      "url": "/uploads/infrastructure/1770375923899-Screenshot 2026-02-06 163432.png",
+      "title": "Screenshot 2026-02-06 163432",
+      "description": "",
+      "order": 1
+    }
+  ]
+}

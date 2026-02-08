@@ -2,12 +2,13 @@
 
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import ConditionalLayout from "./components/ConditionalLayout";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "Shree Radhey Industries - Premium Stone Processing Machinery",
-    template: "%s | Shree Radhey Industries"
+    default: "Radhika Machine Tools - Premium Stone Processing Machinery",
+    template: "%s | Radhika Machine Tools"
   },
   description: "Leading manufacturer of stone processing machinery including granite cutting machines, line polishing machines, handling cranes, and epoxy resin lines. Trusted by 500+ industries worldwide.",
   keywords: [
@@ -19,11 +20,11 @@ export const metadata: Metadata = {
     "stone machinery manufacturer",
     "industrial machinery",
     "Jodhpur machinery",
-    "Shree Radhey Industries"
+    "Radhika Machine Tools"
   ],
-  authors: [{ name: "Shree Radhey Industries" }],
-  creator: "Shree Radhey Industries",
-  publisher: "Shree Radhey Industries",
+  authors: [{ name: "Radhika Machine Tools" }],
+  creator: "Radhika Machine Tools",
+  publisher: "Radhika Machine Tools",
   formatDetection: {
     email: false,
     address: false,
@@ -37,21 +38,21 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    title: 'Shree Radhey Industries - Premium Stone Processing Machinery',
+    title: 'Radhika Machine Tools - Premium Stone Processing Machinery',
     description: 'Leading manufacturer of stone processing machinery. Trusted by 500+ industries worldwide.',
-    siteName: 'Shree Radhey Industries',
+    siteName: 'Radhika Machine Tools',
     images: [
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Shree Radhey Industries - Stone Processing Machinery',
+        alt: 'Radhika Machine Tools - Stone Processing Machinery',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Shree Radhey Industries - Premium Stone Processing Machinery',
+    title: 'Radhika Machine Tools - Premium Stone Processing Machinery',
     description: 'Leading manufacturer of stone processing machinery. Trusted by 500+ industries worldwide.',
     images: ['/images/og-image.jpg'],
   },
@@ -77,8 +78,8 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#B7950B' },
-    { media: '(prefers-color-scheme: dark)', color: '#FAF3D9' },
+    { media: '(prefers-color-scheme: light)', color: '#059669' },
+    { media: '(prefers-color-scheme: dark)', color: '#047857' },
   ],
 };
 
@@ -97,13 +98,17 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="SRI" />
-        <meta name="application-name" content="Shree Radhey Industries" />
-        <meta name="msapplication-TileColor" content="#B7950B" />
-        <meta name="theme-color" content="#B7950B" />
+        <meta name="apple-mobile-web-app-title" content="RMT" />
+        <meta name="application-name" content="Radhika Machine Tools" />
+        <meta name="msapplication-TileColor" content="#059669" />
+        <meta name="theme-color" content="#059669" />
       </head>
       <body className="antialiased">
-        <ConditionalLayout>{children}</ConditionalLayout>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
         
         {/* Structured Data */}
         <script
@@ -112,38 +117,26 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "Shree Radhey Industries",
+              "name": "Radhika Machine Tools",
               "url": process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
               "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/images/radhika-logo.png`,
               "description": "Leading manufacturer of stone processing machinery including granite cutting machines, line polishing machines, handling cranes, and epoxy resin lines.",
-              "address": [
-                {
-                  "@type": "PostalAddress",
-                  "name": "Office",
-                  "streetAddress": "Mali, Nagorion Ka Bass, Shiv Temple",
-                  "addressLocality": "Jodhpur",
-                  "postalCode": "342001",
-                  "addressRegion": "Rajasthan",
-                  "addressCountry": "IN"
-                },
-                {
-                  "@type": "PostalAddress",
-                  "name": "Factory",
-                  "streetAddress": "Khasra No. 155/1, Plot No. 6-B, Ram Nagar Salawas Road, Sangriya",
-                  "addressLocality": "Jodhpur",
-                  "postalCode": "342013",
-                  "addressRegion": "Rajasthan",
-                  "addressCountry": "IN"
-                }
-              ],
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Plot No. 06, Ram Nagar, Sangriya",
+                "addressLocality": "Jodhpur",
+                "addressRegion": "Rajasthan",
+                "addressCountry": "IN"
+              },
               "contactPoint": {
                 "@type": "ContactPoint",
                 "telephone": "+91-9983813366",
                 "contactType": "customer service",
-                "email": "shreeradheyindustriesjodhpur@gmail.com"
+                "email": "rmt.jodhpur@gmail.com"
               },
               "sameAs": [
-                "https://www.shreeradheyindustriesjodhpur.com"
+                "https://www.facebook.com/radhikamachinetools",
+                "https://www.linkedin.com/company/radhika-machine-tools"
               ]
             })
           }}

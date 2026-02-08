@@ -1,85 +1,223 @@
+// app/components/Footer.tsx
+
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Instagram, MapPin, Phone, Mail, Clock } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-brand-accent via-gray-800 to-brand-accent text-secondary">
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          <div>
-            <Link href="/" className="flex items-center space-x-4 mb-6">
+    <footer className="bg-gradient-to-br from-brand-green-dark via-brand-green to-brand-green-deeper text-white relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5"></div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12">
+          {/* Company Info */}
+          <div className="lg:col-span-1">
+            <Link href="/" className="flex items-center gap-3 mb-6">
               <div className="relative">
                 <Image
                   src="/images/radhika-logo.png"
-                  alt="Shree Radhey Industries"
-                  width={48}
-                  height={48}
-                  className="rounded-2xl"
+                  alt="Radhika Machine Tools Logo"
+                  width={50}
+                  height={50}
+                  className="rounded-full ring-2 ring-white/20"
                 />
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-brand-accent"></div>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-secondary">Shree Radhey Industries</h3>
-                <p className="text-sm text-primary-light font-semibold">Engineering Excellence</p>
+                <span className="text-xl font-bold text-white block">
+                  Radhika Machine Tools
+                </span>
+                <span className="text-xs text-pink-100">
+                  Engineering Excellence
+                </span>
               </div>
             </Link>
-            <p className="text-gray-300 text-sm leading-relaxed">
-              Leading manufacturer of stone processing machinery. Trusted by 500+ industries worldwide with cutting-edge technology.
+            
+            <p className="text-pink-100 mb-6 leading-relaxed">
+              Engineering excellence in stone processing machinery for the
+              global stone industry. Trusted by 500+ clients worldwide.
             </p>
+            
+            <div className="flex space-x-4">
+              <Link
+                href="#"
+                className="w-10 h-10 bg-white/10 hover:bg-brand-accent rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+              >
+                <Facebook size={18} />
+              </Link>
+              <Link
+                href="#"
+                className="w-10 h-10 bg-white/10 hover:bg-brand-accent rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+              >
+                <Twitter size={18} />
+              </Link>
+              <Link
+                href="#"
+                className="w-10 h-10 bg-white/10 hover:bg-brand-accent rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+              >
+                <Linkedin size={18} />
+              </Link>
+              <Link
+                href="#"
+                className="w-10 h-10 bg-white/10 hover:bg-brand-accent rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+              >
+                <Instagram size={18} />
+              </Link>
+            </div>
           </div>
 
-          <div>
-            <h4 className="text-xl font-bold mb-6 text-secondary">Quick Links</h4>
-            <ul className="space-y-4">
-              <li><Link href="/about" className="text-gray-300 hover:text-primary-light transition-colors font-medium flex items-center group"><span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:bg-primary-light"></span>About Us</Link></li>
-              <li><Link href="/products" className="text-gray-300 hover:text-primary-light transition-colors font-medium flex items-center group"><span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:bg-primary-light"></span>Products</Link></li>
-              <li><Link href="/contact" className="text-gray-300 hover:text-primary-light transition-colors font-medium flex items-center group"><span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:bg-primary-light"></span>Contact</Link></li>
-              <li><Link href="/privacy-policy" className="text-gray-300 hover:text-primary-light transition-colors font-medium flex items-center group"><span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:bg-primary-light"></span>Privacy Policy</Link></li>
-            </ul>
+          {/* Quick Links & Support - Side by side on mobile */}
+          <div className="grid grid-cols-2 gap-6 lg:col-span-2 lg:grid-cols-2">
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4 text-brand-accent">
+                Quick Links
+              </h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link 
+                    href="/about" 
+                    className="text-pink-100 hover:text-white transition-colors duration-300 flex items-center gap-2 group text-sm"
+                  >
+                    <span className="w-1 h-1 bg-brand-accent rounded-full transition-all duration-300 group-hover:w-2"></span>
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/products"
+                    className="text-pink-100 hover:text-white transition-colors duration-300 flex items-center gap-2 group text-sm"
+                  >
+                    <span className="w-1 h-1 bg-brand-accent rounded-full transition-all duration-300 group-hover:w-2"></span>
+                    Products
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/contact"
+                    className="text-pink-100 hover:text-white transition-colors duration-300 flex items-center gap-2 group text-sm"
+                  >
+                    <span className="w-1 h-1 bg-brand-accent rounded-full transition-all duration-300 group-hover:w-2"></span>
+                    Contact
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/faq" 
+                    className="text-pink-100 hover:text-white transition-colors duration-300 flex items-center gap-2 group text-sm"
+                  >
+                    <span className="w-1 h-1 bg-brand-accent rounded-full transition-all duration-300 group-hover:w-2"></span>
+                    FAQ
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Support Links */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4 text-brand-accent">
+                Support
+              </h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    href="/privacy-policy"
+                    className="text-pink-100 hover:text-white transition-colors duration-300 flex items-center gap-2 group text-sm"
+                  >
+                    <span className="w-1 h-1 bg-brand-accent rounded-full transition-all duration-300 group-hover:w-2"></span>
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/terms-and-conditions"
+                    className="text-pink-100 hover:text-white transition-colors duration-300 flex items-center gap-2 group text-sm"
+                  >
+                    <span className="w-1 h-1 bg-brand-accent rounded-full transition-all duration-300 group-hover:w-2"></span>
+                    Terms & Conditions
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/service-center"
+                    className="text-pink-100 hover:text-white transition-colors duration-300 flex items-center gap-2 group text-sm"
+                  >
+                    <span className="w-1 h-1 bg-brand-accent rounded-full transition-all duration-300 group-hover:w-2"></span>
+                    Service Center
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
 
+          {/* Contact Info */}
           <div>
-            <h4 className="text-xl font-bold mb-6 text-secondary">Contact Info</h4>
-            <div className="space-y-5">
-              <div className="flex items-start space-x-4">
-                <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
-                  <MapPin className="text-secondary" size={18} />
-                </div>
-                <div className="text-gray-300 text-sm">
-                  <p className="font-semibold text-secondary">Mali, Nagorion Ka Bass, Shiv Temple</p>
-                  <p>Jodhpur 342001, Rajasthan</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 bg-wellness-secondary rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Phone className="text-secondary" size={18} />
-                </div>
-                <div className="text-gray-300 text-sm">
-                  <p className="font-semibold text-secondary">+91 9983813366</p>
-                  <p>+91 9950329353</p>
+            <h4 className="text-lg font-semibold mb-6 text-brand-accent">
+              Contact Info
+            </h4>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <MapPin className="text-brand-accent mt-1 flex-shrink-0" size={18} />
+                <div className="text-pink-100">
+                  <p className="font-medium text-white mb-1">Unit-1:</p>
+                  <p className="text-sm">Plot No. 06, Ram Nagar, Sangriya, Jodhpur</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Mail className="text-secondary" size={18} />
+              
+              <div className="flex items-start gap-3">
+                <MapPin className="text-brand-accent mt-1 flex-shrink-0" size={18} />
+                <div className="text-pink-100">
+                  <p className="font-medium text-white mb-1">Unit-2:</p>
+                  <p className="text-sm">J-65, RIICO, 1st Phase, Sangriya, Jodhpur</p>
                 </div>
-                <a href="mailto:shreeradheyindustriesjodhpur@gmail.com" className="text-gray-300 hover:text-primary-light transition-colors text-sm font-medium">
-                  shreeradheyindustriesjodhpur@gmail.com
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <Mail className="text-brand-accent flex-shrink-0" size={18} />
+                <a 
+                  href="mailto:rmt.jodhpur@gmail.com"
+                  className="text-pink-100 hover:text-white transition-colors"
+                >
+                  rmt.jodhpur@gmail.com
                 </a>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <Phone className="text-brand-accent flex-shrink-0" size={18} />
+                <a 
+                  href="tel:+919983813366"
+                  className="text-pink-100 hover:text-white transition-colors"
+                >
+                  +91 9983813366
+                </a>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <Clock className="text-brand-accent flex-shrink-0" size={18} />
+                <div className="text-pink-100">
+                  <p className="text-sm">Mon - Sat: 9:00 AM - 6:00 PM</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-700">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm font-medium">
-              &copy; {new Date().getFullYear()} Shree Radhey Industries. All Rights Reserved.
+        {/* Bottom Section */}
+        <div className="mt-12 pt-8 border-t border-white/20">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+            <p className="text-pink-100 text-center lg:text-left">
+              &copy; {new Date().getFullYear()} Radhika Machine Tools. All Rights Reserved.
             </p>
-            <div className="flex space-x-8 mt-4 md:mt-0">
-              <Link href="/terms-and-conditions" className="text-gray-400 hover:text-primary-light text-sm transition-colors font-medium">Terms & Conditions</Link>
-              <Link href="/privacy-policy" className="text-gray-400 hover:text-primary-light text-sm transition-colors font-medium">Privacy Policy</Link>
+            <div className="flex items-center gap-6 text-sm text-pink-100">
+              <Link href="/privacy-policy" className="hover:text-white transition-colors">
+                Privacy
+              </Link>
+              <Link href="/terms-and-conditions" className="hover:text-white transition-colors">
+                Terms
+              </Link>
+              <Link href="/sitemap" className="hover:text-white transition-colors">
+                Sitemap
+              </Link>
             </div>
           </div>
         </div>

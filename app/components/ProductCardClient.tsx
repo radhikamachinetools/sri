@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Eye } from "lucide-react";
-import { IMAGES } from "../lib/images";
 
 type Product = {
   _id: string;
@@ -35,7 +34,7 @@ export default function ProductCardClient({
     >
       <div className="relative h-64 sm:h-72 overflow-hidden">
         <Image
-          src={product.imageUrl || IMAGES.productPlaceholder}
+          src={product.imageUrl || "/images/placeholder.png"}
           alt={product.name}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -44,7 +43,7 @@ export default function ProductCardClient({
         
         {/* Category Badge */}
         <div className="absolute top-4 left-4">
-          <span className="bg-primary text-white px-3 py-1 rounded-full text-xs font-medium">
+          <span className="bg-brand-green text-white px-3 py-1 rounded-full text-xs font-medium">
             {product.category}
           </span>
         </div>
@@ -53,7 +52,7 @@ export default function ProductCardClient({
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
           <Link
             href={`/products/${product.slug}`}
-            className="bg-white text-primary px-6 py-3 rounded-full font-semibold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-lg hover:shadow-xl"
+            className="bg-white text-brand-green-dark px-6 py-3 rounded-full font-semibold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-lg hover:shadow-xl"
           >
             <Eye size={18} />
             View Details
@@ -62,16 +61,16 @@ export default function ProductCardClient({
       </div>
 
       <div className="p-6">
-        <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+        <h3 className="text-xl font-bold mb-3 text-dark-gray group-hover:text-brand-green-dark transition-colors duration-300 line-clamp-2">
           {product.name}
         </h3>
-        <p className="text-gray-600 mb-4 line-clamp-3 leading-relaxed">
+        <p className="text-muted mb-4 line-clamp-3 leading-relaxed">
           {product.shortDescription}
         </p>
         
         <Link
           href={`/products/${product.slug}`}
-          className="inline-flex items-center gap-2 text-primary font-semibold hover:text-primary-dark transition-colors duration-300 group/link"
+          className="inline-flex items-center gap-2 text-brand-green-dark font-semibold hover:text-brand-green transition-colors duration-300 group/link"
         >
           Learn More
           <ArrowRight 

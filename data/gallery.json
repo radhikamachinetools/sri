@@ -1,0 +1,66 @@
+{
+  "galleryCategories": [
+    {
+      "_id": "1770204991890",
+      "name": "Quality",
+      "slug": "quality",
+      "headerImage": "/uploads/gallery/1770204991173-RADHIKA MACHINE TOOLS-B.pdf Page 3 image 3.png",
+      "displayOrder": 1
+    },
+    {
+      "_id": "1770205049778",
+      "name": "Our Exhibition and Events",
+      "slug": "our-exhibition-and-events",
+      "headerImage": "/uploads/gallery/1770205048854-RADHIKA MACHINE TOOLS-B.pdf Page 1 image 1.png",
+      "displayOrder": 2
+    },
+    {
+      "_id": "1770205079397",
+      "name": "Innovation",
+      "slug": "innovation",
+      "headerImage": "/uploads/gallery/1770205078859-RADHIKA MACHINE TOOLS-B.pdf Page 6 image 2.png",
+      "displayOrder": 3
+    },
+    {
+      "_id": "1770205110576",
+      "name": "Commitment",
+      "slug": "commitment",
+      "headerImage": "/uploads/gallery/1770205109880-RADHIKA MACHINE TOOLS-B.pdf Page 7 image 1.png",
+      "displayOrder": 4
+    }
+  ],
+  "galleryItems": [
+    {
+      "_id": "1770205154662",
+      "categoryId": "1770204991890",
+      "type": "image",
+      "url": "/uploads/gallery/1770205154092-RADHIKA MACHINE TOOLS-B.pdf Page 5 image 1.png",
+      "title": "Item 1",
+      "displayOrder": 1
+    },
+    {
+      "_id": "1770205178576",
+      "categoryId": "1770205049778",
+      "type": "image",
+      "url": "/uploads/gallery/1770205177559-RADHIKA MACHINE TOOLS-B.pdf Page 5 image 5.png",
+      "title": "Item 1",
+      "displayOrder": 1
+    },
+    {
+      "_id": "1770205202098",
+      "categoryId": "1770205079397",
+      "type": "image",
+      "url": "/uploads/gallery/1770205201399-RADHIKA MACHINE TOOLS-B.pdf Page 6 image 5.png",
+      "title": "Item 1",
+      "displayOrder": 1
+    },
+    {
+      "_id": "1770205288026",
+      "categoryId": "1770205110576",
+      "type": "image",
+      "url": "/uploads/gallery/1770205287513-RADHIKA MACHINE TOOLS-B.pdf Page 9 image 2.png",
+      "title": "Item 1",
+      "displayOrder": 1
+    }
+  ]
+}

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import { Package, Mail, Image, LogOut, Settings, BarChart3, Home } from "lucide-react";
+import { Package, Mail, Image, LogOut, FolderOpen, Award, Menu, X } from "lucide-react";
 
 export default function AdminLayout({
   children,
@@ -12,6 +12,7 @@ export default function AdminLayout({
 }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -38,8 +39,8 @@ export default function AdminLayout({
   };
 
   if (loading) {
-    return <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-orange-50 flex items-center justify-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-4 border-yellow-600 border-t-transparent"></div>
+    return <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-green"></div>
     </div>;
   }
 
@@ -51,74 +52,107 @@ export default function AdminLayout({
     return null;
   }
 
-  const navItems = [
-    { href: '/admin', icon: BarChart3, label: 'Dashboard' },
-    { href: '/admin/products', icon: Package, label: 'Products' },
-    { href: '/admin/contacts', icon: Mail, label: 'Contacts' },
-    { href: '/admin/media', icon: Image, label: 'Media' },
-    { href: '/admin/settings', icon: Settings, label: 'Settings' }
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-orange-50">
-      <div className="flex">
-        <aside className="w-80 bg-white/95 backdrop-blur-md shadow-2xl border-r border-slate-200/60 min-h-screen">
-          <div className="p-8 border-b border-slate-200/60">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-yellow-600 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <Settings className="h-7 w-7 text-white" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-slate-900">Admin Portal</h2>
-                <p className="text-sm text-yellow-600 font-medium">Shree Radhey Industries</p>
-              </div>
-            </div>
+    <div className="min-h-screen bg-gray-100 overflow-x-hidden">
+      <div className="flex flex-col lg:flex-row">
+        {/* Mobile Menu Button */}
+        <div className="lg:hidden bg-white shadow-sm p-3 flex justify-between items-center">
+          <h2 className="text-lg font-bold text-gray-900">Dashboard</h2>
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 rounded-lg hover:bg-gray-100"
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+
+        {/* Sidebar */}
+        <aside className={`${isMobileMenuOpen ? 'block' : 'hidden'} lg:block w-full lg:w-64 bg-white shadow-sm lg:min-h-screen`}>
+          <div className="hidden lg:block p-4">
+            <h2 className="text-lg font-bold text-gray-900">Dashboard</h2>
           </div>
-          
-          <nav className="p-6">
-            <div className="space-y-3">
-              {navItems.map((item) => {
-                const isActive = pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href));
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-300 font-medium ${
-                      isActive 
-                        ? 'admin-nav-active shadow-lg' 
-                        : 'admin-nav-inactive hover:bg-slate-50'
-                    }`}
-                  >
-                    <item.icon size={22} className={isActive ? 'text-white' : 'text-slate-500'} />
-                    <span className="text-sm font-semibold">{item.label}</span>
-                  </Link>
-                );
-              })}
-            </div>
-            
-            <div className="mt-8 pt-6 border-t border-slate-200/60">
-              <Link
-                href="/"
-                className="admin-nav-inactive flex items-center gap-4 px-5 py-4 rounded-2xl mb-3"
-              >
-                <Home size={22} className="text-slate-500" />
-                <span className="font-semibold text-sm">View Website</span>
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-4 px-5 py-4 text-red-600 hover:bg-red-50 rounded-2xl transition-all duration-300 w-full text-left font-semibold text-sm"
-              >
-                <LogOut size={22} />
-                <span>Logout</span>
-              </button>
-            </div>
+          <nav className="mt-2 lg:mt-4">
+            <Link
+              href="/admin"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 text-sm ${
+                pathname === '/admin' ? 'bg-brand-green text-white hover:bg-brand-green' : ''
+              }`}
+            >
+              <Package size={16} />
+              Dashboard
+            </Link>
+            <Link
+              href="/admin/categories"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 text-sm ${
+                pathname.startsWith('/admin/categories') ? 'bg-brand-green text-white hover:bg-brand-green' : ''
+              }`}
+            >
+              <FolderOpen size={16} />
+              Categories
+            </Link>
+            <Link
+              href="/admin/products"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 text-sm ${
+                pathname.startsWith('/admin/products') ? 'bg-brand-green text-white hover:bg-brand-green' : ''
+              }`}
+            >
+              <Package size={16} />
+              Products
+            </Link>
+            <Link
+              href="/admin/contacts"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 text-sm ${
+                pathname === '/admin/contacts' ? 'bg-brand-green text-white hover:bg-brand-green' : ''
+              }`}
+            >
+              <Mail size={16} />
+              Contacts
+            </Link>
+            <Link
+              href="/admin/certificates"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 text-sm ${
+                pathname.startsWith('/admin/certificates') ? 'bg-brand-green text-white hover:bg-brand-green' : ''
+              }`}
+            >
+              <Award size={16} />
+              Certificates
+            </Link>
+            <Link
+              href="/admin/gallery"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 text-sm ${
+                pathname.startsWith('/admin/gallery') ? 'bg-brand-green text-white hover:bg-brand-green' : ''
+              }`}
+            >
+              <Image size={16} />
+              Gallery
+            </Link>
+            <Link
+              href="/admin/media"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 text-sm ${
+                pathname === '/admin/media' ? 'bg-brand-green text-white hover:bg-brand-green' : ''
+              }`}
+            >
+              <Image size={16} />
+              Media
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 w-full text-left text-sm"
+            >
+              <LogOut size={16} />
+              Logout
+            </button>
           </nav>
         </aside>
-        
-        <main className="flex-1 p-4 sm:p-6 lg:p-10 bg-gradient-to-br from-yellow-50/50 to-white">
-          <div className="max-w-8xl mx-auto">
-            {children}
-          </div>
+        <main className="flex-1 p-3 lg:p-6">
+          {children}
         </main>
       </div>
     </div>

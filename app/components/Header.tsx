@@ -1,279 +1,305 @@
+// app/components/Header.tsx
+
 "use client";
 
 import Link from "next/link";
 import Image from "next/image";
-import React, { useState, useRef, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { Menu, X, ChevronDown, Phone, Mail } from "lucide-react";
+import { usePathname } from "next/navigation";
+import styles from './Header.module.css';
+
+type Category = {
+  _id: string;
+  name: string;
+  slug: string;
+  status: string;
+  displayOrder: number;
+};
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const headerRef = useRef<HTMLElement>(null);
-  
-  // Enhanced scroll detection with auto-hide
+  const [categories, setCategories] = useState<Category[]>([]);
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
+
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // Update scrolled state
-      setIsScrolled(currentScrollY > 10);
-      
-      // Auto-hide logic
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down & past threshold - hide header
-        setIsVisible(false);
-      } else if (currentScrollY < lastScrollY || currentScrollY < 10) {
-        // Scrolling up or near top - show header
-        setIsVisible(true);
-      }
-      
-      setLastScrollY(currentScrollY);
+      setIsScrolled(window.scrollY > 100);
     };
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  // Handle body scroll lock when mobile menu is open
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-      setIsVisible(true); // Always show header when menu is open
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    
-    return () => {
-      document.body.style.overflow = 'unset';
+    const fetchCategories = async () => {
+      try {
+        console.log('🔍 Fetching categories from /api/categories');
+        const response = await fetch('/api/categories');
+        const data = await response.json();
+        console.log('📊 Categories API response:', data);
+        
+        const activeCategories = data.categories
+          ?.filter((c: Category) => c.status === 'active')
+          ?.sort((a: Category, b: Category) => (a.displayOrder || 0) - (b.displayOrder || 0)) || [];
+        
+        console.log('✅ Active categories:', activeCategories);
+        setCategories(activeCategories);
+      } catch (error) {
+        console.error('❌ Error fetching categories:', error);
+      }
     };
-  }, [isMenuOpen]);
+    fetchCategories();
+  }, []);
 
-  const navigation = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { 
-      name: "Products", 
-      href: "/products",
-      hasDropdown: true,
-      subItems: [
-        { name: "Block Cutters", href: "/products/c-2300-block-cutter" },
-        { name: "Polishing Machines", href: "/products/lpm-disk-polishing-machine" },
-        { name: "Wire Saw Machines", href: "/products/wsm-wire-saw-machine" },
-        { name: "Processing Equipment", href: "/products/stone-processing-machine" }
-      ]
-    },
-    { name: "Services", href: "/service-center" },
-    { name: "Contact", href: "/contact" }
-  ];
+  const shouldShowText = !isHomePage || isScrolled;
 
   return (
     <>
+      {/* Header Spacer - prevents content jump when header becomes fixed */}
+      {isScrolled && <div className="h-16 lg:h-20"></div>}
+      
+      {/* Top Contact Bar */}
+      <div className="bg-brand-green-deeper text-white py-2 hidden md:block">
+        <div className="container mx-auto px-4 flex justify-between items-center text-sm">
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Phone size={14} />
+              <span>+91 9983813366</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Mail size={14} />
+              <span>rmt.jodhpur@gmail.com</span>
+            </div>
+          </div>
+          <div className="text-xs">
+            Unit-1: Plot No. 06, Ram Nagar, Sangriya, Jodhpur
+          </div>
+        </div>
+      </div>
 
-
-      {/* Main Navigation - Enhanced with auto-hide functionality */}
-      <motion.header 
-        ref={headerRef}
-        initial={{ y: 0, opacity: 1 }}
-        animate={{ 
-          y: isVisible ? 0 : -100,
-          opacity: isVisible ? 1 : 0
-        }}
-        transition={{ 
-          duration: 0.3,
-          ease: "easeInOut"
-        }}
-        className={`fixed top-0 left-0 right-0 z-[9999] will-change-transform ${
-          isScrolled 
-            ? "bg-secondary/95 backdrop-blur-xl shadow-2xl border-b border-primary/20" 
-            : "bg-secondary/98 backdrop-blur-md shadow-lg"
-        }`}
-        style={{
-          backdropFilter: isScrolled ? 'blur(20px) saturate(180%)' : 'blur(12px) saturate(120%)',
-          WebkitBackdropFilter: isScrolled ? 'blur(20px) saturate(180%)' : 'blur(12px) saturate(120%)'
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 1 }}
-            className="flex items-center justify-between h-16 sm:h-18 lg:h-20"
-          >
-                {/* Logo - Enhanced with better animations and responsive sizing */}
-                <Link href="/" className="flex items-center space-x-2 lg:space-x-3 flex-shrink-0 group">
-                  <motion.div 
-                    whileHover={{ scale: 1.08, rotate: 5 }}
-                    whileTap={{ scale: 0.92 }}
-                    className="relative"
-                  >
-                    <Image
-                      src="/images/radhika-logo.png"
-                      alt="Shree Radhey Industries"
-                      width={40}
-                      height={40}
-                      className="w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-xl shadow-lg ring-2 ring-primary/30 group-hover:ring-primary/50 transition-all duration-300"
-                      priority
-                    />
-                    <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 lg:w-3 lg:h-3 bg-green-500 rounded-full border-2 border-secondary animate-pulse shadow-sm"></div>
-                  </motion.div>
-                  <div className="hidden sm:block">
-                    <motion.h1 
-                      whileHover={{ scale: 1.02 }}
-                      className="text-lg sm:text-xl lg:text-2xl font-black text-brand-accent leading-tight group-hover:text-primary transition-colors duration-300"
-                    >
-                      SRI
-                    </motion.h1>
-                    <p className="text-xs sm:text-sm text-primary font-bold -mt-0.5 leading-none opacity-90">
-                      INDUSTRIES
-                    </p>
-                  </div>
-                </Link>
-
-                {/* Desktop Navigation - Enhanced with better spacing and effects */}
-                <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
-                  {navigation.map((item, index) => (
-                    <motion.div 
-                      key={item.name} 
-                      className="relative group"
-                      initial={{ opacity: 1 }}
-                      animate={{ opacity: 1 }}
-                    >
-                      <Link
-                        href={item.href}
-                        className="flex items-center space-x-1 text-brand-accent hover:text-primary font-semibold transition-all duration-300 px-3 xl:px-4 py-2.5 rounded-xl hover:bg-primary/10"
-                      >
-                        <span className="text-sm xl:text-base">{item.name}</span>
-                        {item.hasDropdown && (
-                          <ChevronDown size={14} className="transition-transform duration-300 group-hover:rotate-180" />
-                        )}
-                      </Link>
-                      
-                      {item.hasDropdown && (
-                        <div className="absolute top-full left-0 mt-3 w-72 bg-secondary/98 backdrop-blur-xl rounded-2xl shadow-2xl border border-primary/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                          <div className="py-5">
-                            <div className="px-4 pb-3 border-b border-primary/10">
-                              <p className="text-xs font-bold text-primary uppercase tracking-wider">Our Products</p>
-                            </div>
-                            {item.subItems?.map((subItem) => (
-                              <Link
-                                key={subItem.name}
-                                href={subItem.href}
-                                className="block px-6 py-3 text-brand-accent hover:bg-primary/10 hover:text-primary transition-all duration-300 text-sm font-medium"
-                              >
-                                {subItem.name}
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </motion.div>
-                  ))}
-                </nav>
-
-                {/* Action Buttons */}
-                <div className="hidden lg:flex items-center flex-shrink-0">
-                  <Link href="/contact">
-                    <motion.button
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="bg-gradient-to-r from-primary to-primary-dark text-secondary px-5 xl:px-7 py-3 xl:py-3.5 rounded-xl font-bold text-sm xl:text-base hover:shadow-2xl transition-all duration-300"
-                    >
-                      Get Quote
-                    </motion.button>
-                  </Link>
+      {/* Main Header */}
+      <header className={`bg-gradient-to-r from-brand-green-dark to-brand-green text-white shadow-lg transition-all duration-300 ${
+        isScrolled ? "fixed top-0 left-0 right-0 z-50 shadow-xl backdrop-blur-sm bg-opacity-95" : "relative"
+      }`}>
+        <div className={`container mx-auto px-4 sm:px-6 lg:px-8 ${styles.headerContainer}`}>
+          <div className={`flex items-center justify-between h-16 lg:h-20 ${styles.navContainer}`}>
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <Link href="/" className="flex items-center gap-3">
+                <div className="relative">
+                  <Image
+                    src="/images/radhika-logo.png"
+                    alt="Radhika Machine Tools Logo"
+                    width={45}
+                    height={45}
+                    className="lg:w-[55px] lg:h-[55px] rounded-full ring-2 ring-white/20"
+                    priority
+                  />
                 </div>
+                <div className={`transition-all duration-300 ${
+                  shouldShowText ? 'opacity-100 max-w-none' : 'opacity-0 max-w-0 overflow-hidden'
+                }`}>
+                  <span className="text-xl lg:text-2xl font-bold text-white">
+                    Radhika Machine Tools
+                  </span>
+                  <p className="text-xs text-pink-100 -mt-1">
+                    Engineering Excellence
+                  </p>
+                </div>
+              </Link>
+            </div>
 
-                {/* Mobile Menu Button */}
-                <motion.button
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="lg:hidden p-3 rounded-xl hover:bg-primary/10 transition-all duration-300"
-                  aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                >
-                  {isMenuOpen ? (
-                    <X size={24} className="text-brand-accent" />
-                  ) : (
-                    <Menu size={24} className="text-brand-accent" />
-                  )}
-                </motion.button>
-          </motion.div>
+            {/* Desktop Navigation */}
+            <nav className={`hidden lg:flex lg:items-center lg:space-x-6 ${styles.navContainer}`}>
+              <a
+                href="/uploads/RADHIKA MACHINE TOOLS-B.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pink-100 hover:text-white transition-colors duration-300 font-medium relative group"
+              >
+                Check Brochure
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 group-hover:w-full"></span>
+              </a>
+              <Link
+                href="/"
+                className="text-pink-100 hover:text-white transition-colors duration-300 font-medium relative group"
+              >
+                Home
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+              <Link
+                href="/about"
+                className="text-pink-100 hover:text-white transition-colors duration-300 font-medium relative group"
+              >
+                About Us
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+              <div className={`relative group ${styles.dropdownContainer}`}>
+                <div className="text-pink-100 hover:text-white transition-colors duration-300 font-medium flex items-center gap-1 cursor-pointer">
+                  Products
+                  <ChevronDown size={16} className="transition-transform duration-300 group-hover:rotate-180" />
+                </div>
+                {categories.length > 0 && (
+                  <div className={`${styles.dropdownMenu}`}>
+                    <div className="py-2">
+                      {categories.map((category) => (
+                        <Link
+                          key={category._id}
+                          href={`/products#${category.slug}`}
+                          className={styles.dropdownItem}
+                        >
+                          {category.name}
+                        </Link>
+                      ))}
+                      <Link
+                        href="/products"
+                        className={`${styles.dropdownItem} ${styles.dropdownDivider} font-medium text-brand-green-dark`}
+                      >
+                        View All Products
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <Link
+                href="/gallery"
+                className="text-pink-100 hover:text-white transition-colors duration-300 font-medium relative group"
+              >
+                Gallery
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+              <Link
+                href="/contact"
+                className="text-pink-100 hover:text-white transition-colors duration-300 font-medium relative group"
+              >
+                Contact Us
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            </nav>
+
+            {/* CTA Button */}
+            <Link
+              href="/contact"
+              className="hidden lg:block bg-brand-accent text-brand-green-dark font-semibold px-6 py-2.5 rounded-full hover:bg-white transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              Get Quotation
+            </Link>
+
+            {/* Mobile Menu Button */}
+            <div className="lg:hidden">
+              <button 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="p-2 hover:bg-brand-green-light rounded-lg transition-colors"
+                aria-label="Toggle menu"
+              >
+                {isMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Mobile Menu */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="lg:hidden fixed inset-0 bg-black/30 z-[9997]"
+        {isMenuOpen && (
+          <div className="lg:hidden bg-white shadow-xl border-t border-gray-200 animate-slide-up">
+            <div className="py-4">
+              <a
+                href="/uploads/RADHIKA MACHINE TOOLS-B.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setIsMenuOpen(false)}
-              />
-              
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="lg:hidden bg-secondary/98 backdrop-blur-xl border-t border-primary/30 absolute top-full left-0 right-0 z-[9998] shadow-2xl"
+                className="block px-6 py-3 text-gray-800 hover:bg-pink-50 hover:text-brand-green-dark transition-colors font-medium"
               >
-                <div className="px-4 py-6 space-y-3">
-                  {navigation.map((item) => (
-                    <div key={item.name} className="border-b border-primary/15 last:border-b-0 pb-3 last:pb-0">
-                      <div className="flex items-center justify-between">
-                        <Link
-                          href={item.href}
-                          onClick={() => !item.hasDropdown && setIsMenuOpen(false)}
-                          className="block py-4 text-brand-accent hover:text-primary font-semibold text-lg flex-1"
-                        >
-                          {item.name}
-                        </Link>
-                        {item.hasDropdown && (
-                          <button
-                            onClick={() => setIsProductsOpen(!isProductsOpen)}
-                            className="p-3 hover:bg-primary/10 rounded-xl transition-colors"
-                          >
-                            <ChevronDown 
-                              size={16} 
-                              className={`transition-transform duration-300 text-brand-accent ${isProductsOpen ? 'rotate-180' : ''}`} 
-                            />
-                          </button>
-                        )}
-                      </div>
-                      
-                      {item.hasDropdown && isProductsOpen && (
-                        <div className="ml-4 space-y-2 border-l-2 border-primary/30 pl-4 mt-3">
-                          {item.subItems?.map((subItem) => (
-                            <Link
-                              key={subItem.name}
-                              href={subItem.href}
-                              onClick={() => setIsMenuOpen(false)}
-                              className="block py-3 text-muted hover:text-primary transition-colors text-base"
-                            >
-                              {subItem.name}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                  
-                  <div className="pt-6 border-t border-primary/30 mt-6">
-                    <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
-                      <button className="w-full bg-gradient-to-r from-primary to-primary-dark text-secondary py-4 rounded-xl font-bold text-lg shadow-lg">
-                        Get Quote
-                      </button>
-                    </Link>
-                  </div>
+                Check Brochure
+              </a>
+              <Link
+                href="/"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-6 py-3 text-gray-800 hover:bg-pink-50 hover:text-brand-green-dark transition-colors font-medium"
+              >
+                Home
+              </Link>
+              <Link
+                href="/about"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-6 py-3 text-gray-800 hover:bg-pink-50 hover:text-brand-green-dark transition-colors font-medium"
+              >
+                About Us
+              </Link>
+
+              <div className="border-t border-gray-100">
+                <div className="px-6 py-3 flex justify-between items-center">
+                  <Link 
+                    href="/products" 
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-gray-800 hover:text-brand-green-dark font-medium"
+                  >
+                    Products
+                  </Link>
+                  <button
+                    onClick={() => setIsProductsOpen(!isProductsOpen)}
+                    className="p-1 hover:bg-gray-100 rounded"
+                    aria-label="Toggle products menu"
+                  >
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform duration-300 text-gray-600 ${
+                        isProductsOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
                 </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
-      </motion.header>
+
+                {isProductsOpen && categories.length > 0 && (
+                  <div className="bg-gray-50 border-t border-gray-100">
+                    {categories.map((category) => (
+                      <Link
+                        key={category._id}
+                        href={`/products#${category.slug}`}
+                        onClick={() => setIsMenuOpen(false)}
+                        className="block px-10 py-2.5 text-sm text-gray-700 hover:text-brand-green-dark hover:bg-pink-50 transition-colors"
+                      >
+                        {category.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <Link
+                href="/gallery"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-6 py-3 text-gray-800 hover:bg-pink-50 hover:text-brand-green-dark transition-colors font-medium border-t border-gray-100"
+              >
+                Gallery
+              </Link>
+
+              <Link
+                href="/contact"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-6 py-3 text-gray-800 hover:bg-pink-50 hover:text-brand-green-dark transition-colors font-medium border-t border-gray-100"
+              >
+                Contact Us
+              </Link>
+
+              <div className="px-6 py-4 border-t border-gray-100">
+                <Link
+                  href="/contact"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full text-center text-white font-semibold py-3 rounded-lg transition-colors"
+                >
+                  Get Quotation
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+      </header>
     </>
   );
 };
