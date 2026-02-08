@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
       const buffer = Buffer.from(await file.arrayBuffer());
       await fs.writeFile(filePath, buffer);
 
-      const newItem = {
+      const newItem: any = {
         _id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
         type,
         url: `/uploads/infrastructure/${fileName}`,

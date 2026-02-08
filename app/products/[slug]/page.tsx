@@ -97,7 +97,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   
   // Add variant images to gallery if variants exist
   const variantImages = product.variants?.map(v => v.imageUrl).filter(Boolean) || [];
-  const combinedImages = [...allImages, ...variantImages];
+  const combinedImages = [...allImages, ...variantImages].filter(Boolean) as string[];
   
   // Get current content based on selected variant
   const currentContent = selectedVariant !== null && product.variants?.[selectedVariant] 
@@ -244,7 +244,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                       </thead>
                       <tbody>
                         {product.technicalInformation.rows.map((row, rowIndex) => {
-                          const expectedColumns = product.technicalInformation.headers.reduce((sum, header) => {
+                          const expectedColumns = product.technicalInformation!.headers.reduce((sum, header) => {
                             if (header.children && header.children.length > 0) {
                               return sum + header.children.length;
                             }
@@ -369,7 +369,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                   <tbody>
                     {product.technicalInformation.rows.map((row, rowIndex) => {
                       // Calculate expected number of columns
-                      const expectedColumns = product.technicalInformation.headers.reduce((sum, header) => {
+                      const expectedColumns = product.technicalInformation!.headers.reduce((sum, header) => {
                         if (header.children && header.children.length > 0) {
                           return sum + header.children.length;
                         }

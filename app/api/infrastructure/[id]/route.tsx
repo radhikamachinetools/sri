@@ -6,13 +6,14 @@ const INFRASTRUCTURE_FILE = path.join(process.cwd(), 'data', 'infrastructure.jso
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const data = await fs.readFile(INFRASTRUCTURE_FILE, 'utf8');
     const { items } = JSON.parse(data);
     
-    const filteredItems = items.filter((item: any) => item._id !== params.id);
+    const filteredItems = items.filter((item: any) => item._id !== id);
     await fs.writeFile(INFRASTRUCTURE_FILE, JSON.stringify({ items: filteredItems }, null, 2));
     
     return NextResponse.json({ success: true });
@@ -23,15 +24,16 @@ export async function DELETE(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const updates = await request.json();
     const data = await fs.readFile(INFRASTRUCTURE_FILE, 'utf8');
     const { items } = JSON.parse(data);
     
     const updatedItems = items.map((item: any) =>
-      item._id === params.id ? { ...item, ...updates } : item
+      item._id === id ? { ...item, ...updates } : item
     );
     
     await fs.writeFile(INFRASTRUCTURE_FILE, JSON.stringify({ items: updatedItems }, null, 2));
