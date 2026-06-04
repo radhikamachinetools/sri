@@ -108,7 +108,7 @@ export default function GalleryAdmin() {
     try {
       if (modalType === 'category') {
         // Handle category creation/update
-        let finalFormData = { ...formData };
+        const finalFormData = { ...formData };
         
         if (mediaFiles.length > 0) {
           const mediaUrl = await uploadMedia(mediaFiles[0]);
@@ -116,7 +116,7 @@ export default function GalleryAdmin() {
         }
         
         if (editingItem) {
-          const res = await fetch(`/api/gallery/categories/${(editingItem as any)._id}`, {
+          const res = await fetch(`/api/gallery/categories/${(editingItem as GalleryCategory)._id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name: finalFormData.name, headerImage: finalFormData.headerImage, displayOrder: finalFormData.displayOrder })
@@ -193,7 +193,7 @@ export default function GalleryAdmin() {
           };
           
           if (editingItem) {
-            const res = await fetch(`/api/gallery/items/${(editingItem as any)._id}`, {
+            const res = await fetch(`/api/gallery/items/${(editingItem as GalleryItem)._id}`, {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(payload)
