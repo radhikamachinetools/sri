@@ -1,75 +1,50 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
-
-type GalleryCategory = {
-  _id: string;
-  name: string;
-  slug: string;
-  headerImage: string;
-  displayOrder: number;
-};
-
-const GALLERY_FILE = path.join(process.cwd(), 'data', 'gallery.json');
+import { connectToDatabase } from '../../../../lib/db';
+import { getAdminSession } from '../../../../lib/admin-session';
+import { buildIdFilter, normalizeMongoDocument } from '../../../../lib/mongo-utils';
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    if (!(await getAdminSession())) {
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { id } = await params;
-    const body = await request.json();
-    const { name, headerImage, displayOrder } = body;
+    const { name, headerImage, displayOrder } = await request.json();
 
-    if (!name) {
-      return NextResponse.json({ success: false, error: 'Category name is required' }, { status: 400 });
-    }
+    if (!name) return NextResponse.json({ success: false, error: 'Category name is required' }, { status: 400 });
 
-    const data = await fs.readFile(GALLERY_FILE, 'utf8');
-    const galleryData = JSON.parse(data);
-
-    const categoryIndex = galleryData.galleryCategories.findIndex((cat: GalleryCategory) => cat._id === id);
-    if (categoryIndex === -1) {
-      return NextResponse.json({ success: false, error: 'Category not found' }, { status: 404 });
-    }
-
+    const { db } = await connectToDatabase();
     const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const updateData = { name, slug, headerImage: headerImage || '', displayOrder: parseInt(displayOrder) || 0, updatedAt: new Date() };
 
-    galleryData.galleryCategories[categoryIndex] = {
-      ...galleryData.galleryCategories[categoryIndex],
-      name,
-      slug,
-      headerImage: headerImage || '',
-      displayOrder: parseInt(displayOrder) || 0
-    };
+    const result = await db.collection('sri_gallery_categories').updateOne(buildIdFilter(id), { $set: updateData });
 
-    await fs.writeFile(GALLERY_FILE, JSON.stringify(galleryData, null, 2));
-
-    return NextResponse.json({ success: true, category: galleryData.galleryCategories[categoryIndex] });
+    if (result.matchedCount === 0) return NextResponse.json({ success: false, error: 'Category not found' }, { status: 404 });
+    return NextResponse.json({ success: true, category: normalizeMongoDocument({ _id: id, ...updateData }) });
   } catch (error) {
-    console.error('Error updating gallery category:', error);
+    console.error('PUT gallery category error:', error);
     return NextResponse.json({ success: false, error: 'Failed to update category' }, { status: 500 });
   }
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = await params;
-
-    const data = await fs.readFile(GALLERY_FILE, 'utf8');
-    const galleryData = JSON.parse(data);
-
-    const categoryIndex = galleryData.galleryCategories.findIndex((cat: GalleryCategory) => cat._id === id);
-    if (categoryIndex === -1) {
-      return NextResponse.json({ success: false, error: 'Category not found' }, { status: 404 });
+    if (!(await getAdminSession())) {
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Remove category and all its items
-    galleryData.galleryCategories.splice(categoryIndex, 1);
-    galleryData.galleryItems = galleryData.galleryItems.filter((item: any) => item.categoryId !== id);
+    const { id } = await params;
+    const { db } = await connectToDatabase();
 
-    await fs.writeFile(GALLERY_FILE, JSON.stringify(galleryData, null, 2));
+    const result = await db.collection('sri_gallery_categories').deleteOne(buildIdFilter(id));
+    if (result.deletedCount === 0) return NextResponse.json({ success: false, error: 'Category not found' }, { status: 404 });
+
+    await db.collection('sri_gallery_items').deleteMany({ categoryId: id });
 
     return NextResponse.json({ success: true, message: 'Category deleted successfully' });
   } catch (error) {
-    console.error('Error deleting gallery category:', error);
+    console.error('DELETE gallery category error:', error);
     return NextResponse.json({ success: false, error: 'Failed to delete category' }, { status: 500 });
   }
 }

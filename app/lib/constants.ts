@@ -1,4 +1,4 @@
 export const APP_CONFIG = {
-  APPLICATION_NAME: 'RadhikMachineTools',
-  DATABASE_NAME: 'rmt_db'
+  APPLICATION_NAME: 'ShreeRadheyIndustries',
+  DATABASE_NAME: 'sri_db'
 } as const;

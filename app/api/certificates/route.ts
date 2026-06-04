@@ -1,82 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
-
-const CERTIFICATES_FILE = path.join(process.cwd(), 'data', 'certificates.json');
+import { connectToDatabase } from '../../lib/db';
+import { getAdminSession } from '../../lib/admin-session';
+import { normalizeMongoDocuments } from '../../lib/mongo-utils';
 
 export async function GET() {
   try {
-    const data = await fs.readFile(CERTIFICATES_FILE, 'utf8');
-    const result = JSON.parse(data);
-    return NextResponse.json({ success: true, ...result });
+    const { db } = await connectToDatabase();
+    const certificates = await db.collection('sri_certificates')
+      .find({})
+      .sort({ displayOrder: 1 })
+      .toArray();
+
+    return NextResponse.json({ success: true, certificates: normalizeMongoDocuments(certificates) });
   } catch (error) {
-    return NextResponse.json({ success: true, certificates: [] });
+    console.error('GET certificates error:', error);
+    return NextResponse.json({ success: false, certificates: [] });
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const newCertificate = await request.json();
-    
-    let certificatesData;
-    try {
-      const data = await fs.readFile(CERTIFICATES_FILE, 'utf8');
-      certificatesData = JSON.parse(data);
-    } catch {
-      certificatesData = { certificates: [] };
+    if (!(await getAdminSession())) {
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
-    
-    certificatesData.certificates.push(newCertificate);
-    certificatesData.certificates.sort((a: any, b: any) => (a.displayOrder || 0) - (b.displayOrder || 0));
-    
-    await fs.writeFile(CERTIFICATES_FILE, JSON.stringify(certificatesData, null, 2));
-    return NextResponse.json({ success: true });
+
+    const certificateData = await request.json();
+    const { db } = await connectToDatabase();
+
+    const newCertificate = {
+      title: certificateData.title || '',
+      description: certificateData.description || '',
+      imageUrl: certificateData.imageUrl,
+      displayOrder: parseInt(certificateData.displayOrder) || 1,
+      status: certificateData.status || 'active',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+
+    const result = await db.collection('sri_certificates').insertOne(newCertificate);
+    const createdCertificate = { ...newCertificate, _id: result.insertedId.toString(), id: result.insertedId.toString() };
+    return NextResponse.json({ success: true, certificate: createdCertificate });
   } catch (error) {
-    console.error('Certificate creation error:', error);
+    console.error('POST certificates error:', error);
     return NextResponse.json({ success: false, error: 'Failed to create certificate' }, { status: 500 });
-  }
-}
-
-export async function PUT(request: NextRequest) {
-  try {
-    const updatedCertificate = await request.json();
-    
-    let certificatesData;
-    try {
-      const data = await fs.readFile(CERTIFICATES_FILE, 'utf8');
-      certificatesData = JSON.parse(data);
-    } catch {
-      certificatesData = { certificates: [] };
-    }
-    
-    const index = certificatesData.certificates.findIndex((c: any) => c._id === updatedCertificate._id);
-    if (index !== -1) {
-      certificatesData.certificates[index] = updatedCertificate;
-      certificatesData.certificates.sort((a: any, b: any) => (a.displayOrder || 0) - (b.displayOrder || 0));
-      
-      await fs.writeFile(CERTIFICATES_FILE, JSON.stringify(certificatesData, null, 2));
-      return NextResponse.json({ success: true });
-    }
-    return NextResponse.json({ success: false, error: 'Certificate not found' }, { status: 404 });
-  } catch (error) {
-    console.error('Certificate update error:', error);
-    return NextResponse.json({ success: false, error: 'Failed to update certificate' }, { status: 500 });
-  }
-}
-
-export async function DELETE(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
-    
-    const data = await fs.readFile(CERTIFICATES_FILE, 'utf8');
-    const certificatesData = JSON.parse(data);
-    
-    certificatesData.certificates = certificatesData.certificates.filter((c: any) => c._id !== id);
-    
-    await fs.writeFile(CERTIFICATES_FILE, JSON.stringify(certificatesData, null, 2));
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete certificate' }, { status: 500 });
   }
 }

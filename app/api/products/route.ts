@@ -1,44 +1,38 @@
-import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { NextRequest, NextResponse } from 'next/server';
+import { connectToDatabase } from '../../lib/db';
+import { getAdminSession } from '../../lib/admin-session';
+import { normalizeMongoDocuments } from '../../lib/mongo-utils';
 
 export async function GET() {
   try {
-    const PRODUCTS_FILE = path.join(process.cwd(), 'data', 'products.json');
-    const data = await fs.readFile(PRODUCTS_FILE, 'utf8');
-    const parsedData = JSON.parse(data);
-    return NextResponse.json({ success: true, ...parsedData });
+    const { db } = await connectToDatabase();
+    const products = await db.collection('sri_products').find({}).sort({ order: 1 }).toArray();
+    return NextResponse.json({ success: true, products: normalizeMongoDocuments(products) });
   } catch (error) {
-    return NextResponse.json({ success: false, products: [] });
+    console.error('GET products error:', error);
+    return NextResponse.json({ success: false, products: [], error: 'Failed to fetch products' });
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const PRODUCTS_FILE = path.join(process.cwd(), 'data', 'products.json');
+    if (!(await getAdminSession())) {
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
     const productData = await request.json();
-    
-    // Read existing products
-    const data = await fs.readFile(PRODUCTS_FILE, 'utf8');
-    const { products } = JSON.parse(data);
-    
-    // Generate new ID
-    const newId = Date.now().toString();
+    const { db } = await connectToDatabase();
+
     const newProduct = {
-      _id: newId,
-      id: newId,
       ...productData,
-      order: products.length + 1
+      createdAt: new Date(),
+      updatedAt: new Date()
     };
-    
-    // Add new product
-    products.push(newProduct);
-    
-    // Write back to file
-    await fs.writeFile(PRODUCTS_FILE, JSON.stringify({ products }, null, 2));
-    
-    return NextResponse.json({ success: true, product: newProduct });
+
+    const result = await db.collection('sri_products').insertOne(newProduct);
+    return NextResponse.json({ success: true, product: { ...newProduct, _id: result.insertedId.toString(), id: result.insertedId.toString() } });
   } catch (error) {
+    console.error('POST products error:', error);
     return NextResponse.json({ success: false, error: 'Failed to create product' }, { status: 500 });
   }
 }
