@@ -1,7 +1,7 @@
 import { ShieldCheck, Wrench, Trophy, Award, Users, Clock } from "lucide-react";
-import { promises as fs } from 'fs';
-import path from 'path';
 import Image from "next/image";
+import { connectToDatabase } from './lib/db';
+import { normalizeMongoDocuments } from './lib/mongo-utils';
 
 import HeroClient from "./components/HeroClient";
 import FeatureCardClient from "./components/FeatureCardClient";
@@ -45,13 +45,9 @@ type InfrastructureItem = {
 
 async function getAllProducts(): Promise<Product[]> {
   try {
-    const PRODUCTS_FILE = path.join(process.cwd(), 'data', 'products.json');
-    const data = await fs.readFile(PRODUCTS_FILE, 'utf8');
-    const { products } = JSON.parse(data);
-    
-    return products
-      .filter((p: Product) => p.status !== 'inactive')
-      .sort((a: Product, b: Product) => (a.order || 0) - (b.order || 0));
+    const { db } = await connectToDatabase();
+    const products = await db.collection('sri_products').find({ status: { $ne: 'inactive' } }).sort({ order: 1 }).toArray();
+    return normalizeMongoDocuments(products) as unknown as Product[];
   } catch (error) {
     console.error("Failed to fetch products:", error);
     return [];
@@ -60,11 +56,9 @@ async function getAllProducts(): Promise<Product[]> {
 
 async function getInfrastructure(): Promise<InfrastructureItem[]> {
   try {
-    const INFRASTRUCTURE_FILE = path.join(process.cwd(), 'data', 'infrastructure.json');
-    const data = await fs.readFile(INFRASTRUCTURE_FILE, 'utf8');
-    const { items } = JSON.parse(data);
-    
-    return items.sort((a: InfrastructureItem, b: InfrastructureItem) => (a.order || 0) - (b.order || 0));
+    const { db } = await connectToDatabase();
+    const items = await db.collection('sri_infrastructure').find({}).sort({ order: 1 }).toArray();
+    return normalizeMongoDocuments(items) as unknown as InfrastructureItem[];
   } catch (error) {
     console.error("Failed to fetch infrastructure:", error);
     return [];
@@ -73,13 +67,9 @@ async function getInfrastructure(): Promise<InfrastructureItem[]> {
 
 async function getCertificates(): Promise<Certificate[]> {
   try {
-    const CERTIFICATES_FILE = path.join(process.cwd(), 'data', 'certificates.json');
-    const data = await fs.readFile(CERTIFICATES_FILE, 'utf8');
-    const { certificates } = JSON.parse(data);
-    
-    return certificates
-      .filter((c: Certificate) => c.status === 'active')
-      .sort((a: Certificate, b: Certificate) => (a.displayOrder || 0) - (b.displayOrder || 0));
+    const { db } = await connectToDatabase();
+    const certificates = await db.collection('sri_certificates').find({ status: 'active' }).sort({ displayOrder: 1 }).toArray();
+    return normalizeMongoDocuments(certificates) as unknown as Certificate[];
   } catch (error) {
     console.error("Failed to fetch certificates:", error);
     return [];
