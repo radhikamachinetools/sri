@@ -6,20 +6,6 @@ import { ArrowLeft, Save, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import TechnicalTableBuilder from '../components/TechnicalTableBuilder';
 
-type Header = {
-  label: string;
-  colSpan?: number;
-  rowSpan?: number;
-  children?: string[];
-  width?: string;
-  align?: 'left' | 'center' | 'right';
-};
-
-type Row = {
-  values: string[];
-  height?: string;
-};
-
 type Category = {
   _id: string;
   name: string;
@@ -62,8 +48,8 @@ export default function CreateProduct() {
       rows: []
     } as TechnicalTable,
     technicalInformation: {
-      headers: [] as Header[],
-      rows: [] as Row[]
+      headers: [],
+      rows: []
     },
     videos: [] as string[],
     contentSections: [] as ContentSection[],

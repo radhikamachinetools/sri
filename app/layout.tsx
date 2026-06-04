@@ -2,8 +2,7 @@
 
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import LayoutWrapper from "./components/LayoutWrapper";
 import { ToastProvider } from "./components/ToastProvider";
 
 export const metadata: Metadata = {
@@ -106,11 +105,9 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <ToastProvider>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
+        <LayoutWrapper>
+          {children}
+        </LayoutWrapper>
         </ToastProvider>
         
         {/* Structured Data */}
