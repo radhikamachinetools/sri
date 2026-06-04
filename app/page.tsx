@@ -3,6 +3,8 @@ import Image from "next/image";
 import { connectToDatabase } from './lib/db';
 import { normalizeMongoDocuments } from './lib/mongo-utils';
 
+export const dynamic = 'force-dynamic';
+
 import HeroClient from "./components/HeroClient";
 import FeatureCardClient from "./components/FeatureCardClient";
 import ProductCardClient from "./components/ProductCardClient";
