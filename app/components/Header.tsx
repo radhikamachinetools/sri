@@ -91,7 +91,7 @@ const Header = () => {
               <Link href="/" className="flex items-center gap-3">
                 <div className="relative">
                   <Image
-                    src="/images/radhika-logo.png"
+                    src="/SRIlogo.png"
                     alt="Shree Radhey Industries Logo"
                     width={45}
                     height={45}
