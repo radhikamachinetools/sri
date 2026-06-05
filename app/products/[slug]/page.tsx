@@ -144,9 +144,15 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
               </h1>
               <p className="text-base text-zinc-700 leading-relaxed">
                 {selectedVariant !== null && product.variants?.[selectedVariant] 
-                  ? product.variants[selectedVariant].description || product.shortDescription
-                  : product.shortDescription}
+                  ? product.variants[selectedVariant].description || product.shortDescription || product.description
+                  : product.shortDescription || product.description}
               </p>
+              {/* Show description field when no content sections exist */}
+              {selectedVariant === null && product.description && product.shortDescription && product.description !== product.shortDescription && (!product.contentSections || product.contentSections.length === 0) && (!product.features || product.features.length === 0) && (
+                <div className="mt-3 text-sm text-zinc-600 leading-relaxed whitespace-pre-line">
+                  {product.description}
+                </div>
+              )}
             </div>
 
             {currentContent.contentSections && currentContent.contentSections.length > 0 && currentContent.contentSections.map((section, index) => (

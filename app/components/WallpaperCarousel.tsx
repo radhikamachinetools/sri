@@ -61,11 +61,11 @@ export default function WallpaperCarousel() {
           className="space-y-6"
         >
           <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold mb-4">
-            <span className="block text-white">RADHIKA</span>
-            <span className="block text-brand-green text-5xl sm:text-6xl lg:text-7xl">MACHINE</span>
+            <span className="block text-white">SHREE RADHEY</span>
+            <span className="block text-brand-green text-5xl sm:text-6xl lg:text-7xl">INDUSTRIES</span>
           </h1>
           <p className="text-xl sm:text-2xl lg:text-3xl text-gray-200 max-w-4xl mx-auto leading-relaxed">
-            Radhika machine tools is the smartest investment for maximum productivity and unmatched quality
+            Shree Radhey Industries is the smartest investment for maximum productivity and unmatched quality
           </p>
 
           <motion.div

@@ -120,7 +120,7 @@ const Header = () => {
                 rel="noopener noreferrer"
                 className="text-pink-100 hover:text-white transition-colors duration-300 font-medium relative group"
               >
-                Check Brochure
+                Brochure
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 group-hover:w-full"></span>
               </a>
               <Link
@@ -216,7 +216,7 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
                 className="block px-6 py-3 text-gray-800 hover:bg-pink-50 hover:text-brand-green-dark transition-colors font-medium"
               >
-                Check Brochure
+                Brochure
               </a>
               <Link
                 href="/"

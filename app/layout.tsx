@@ -135,8 +135,8 @@ export default function RootLayout({
                 "email": "rmt.jodhpur@gmail.com"
               },
               "sameAs": [
-                "https://www.facebook.com/radhikamachinetools",
-                "https://www.linkedin.com/company/radhika-machine-tools"
+                "https://www.facebook.com/shreeradheyindustries",
+                "https://www.linkedin.com/company/shree-radhey-industries"
               ]
             })
           }}

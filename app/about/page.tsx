@@ -39,7 +39,7 @@ export default function AboutUsPage() {
       >
         <Image
           src="/images/about-us.png"
-          alt="Radhika Machineries Workshop"
+          alt="Shree Radhey Industries Workshop"
           fill
           className="object-cover brightness-50"
           priority
@@ -73,7 +73,7 @@ export default function AboutUsPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Welcome to Radhika Machineries, a name synonymous with strength,
+            Welcome to Shree Radhey Industries, a name synonymous with strength,
             precision, and innovation in stone processing technology. For over
             three decades, we have been at the forefront of the industry,
             delivering robust and reliable machinery that empowers our clients

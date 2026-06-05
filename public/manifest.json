@@ -1,6 +1,6 @@
 {
-  "name": "Radhika Machine Tools",
-  "short_name": "RMT",
+  "name": "Shree Radhey Industries",
+  "short_name": "SRI",
   "description": "Leading manufacturer of stone processing machinery",
   "start_url": "/",
   "display": "standalone",
@@ -9,13 +9,13 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/images/radhika-logo.png",
+      "src": "/SRIlogo.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "/images/radhika-logo.png",
+      "src": "/SRIlogo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
